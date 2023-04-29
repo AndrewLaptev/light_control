@@ -4,6 +4,7 @@ services:
   adminer:
     image: adminer:4.8.1
     container_name: light_control_adminer
+    restart: always
     volumes:
       - ./volumes/adminer:/var/www/html/plugins-enabled
       - ./$DBMS_PATH:/home
@@ -16,6 +17,7 @@ services:
   light_control:
     image: light_control
     container_name: light_control
+    restart: always
     build: .
     volumes:
       - ./volumes/dbms:/service/volumes/dbms
