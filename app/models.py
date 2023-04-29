@@ -12,7 +12,7 @@ class User(BaseModel):
 
 
 class Action(BaseModel):
-    user_id: int
+    username: str
     time: datetime
     lamp: int
     temperature: int

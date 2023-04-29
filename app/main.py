@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
 from .routers import auth_router, light_router
@@ -12,7 +14,7 @@ app.include_router(light_router)
 
 @app.on_event("startup")
 async def startup_dbms():
-    async with db_session() as db:
+    async with asynccontextmanager(db_session)() as db:
         await init_dbms(db)
 
         if not await healthcheck_dbms(db):

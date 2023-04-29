@@ -1,6 +1,5 @@
 import os
 from typing import AsyncGenerator
-from contextlib import asynccontextmanager
 
 import aiosqlite
 from aiosqlite import Connection
@@ -8,7 +7,6 @@ from aiosqlite import Connection
 from .settings import settings
 
 
-@asynccontextmanager
 async def db_session() -> AsyncGenerator[Connection, None]:
     db = await aiosqlite.connect(settings.dbms_fullname)
     try:
@@ -54,4 +52,6 @@ async def init_dbms(db: Connection):
         """
     )
     await db.commit()
-    os.system("chmod 777 -R volumes/dbms")
+
+    if oct(os.stat(settings.dbms_fullname).st_mode)[-3:] != "777":
+        os.system("chmod 777 -R volumes/dbms")
