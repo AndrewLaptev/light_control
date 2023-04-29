@@ -7,7 +7,7 @@ services:
     restart: always
     volumes:
       - ./volumes/adminer:/var/www/html/plugins-enabled
-      - ./$DBMS_PATH:/home
+      - ./volumes/dbms:/home
     environment:
       DBMS_ADMINER_PASSWORD: $DBMS_ADMINER_PASSWORD
       ADMINER_DESIGN: pepa-linha

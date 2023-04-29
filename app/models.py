@@ -3,6 +3,7 @@ from datetime import datetime
 
 
 class User(BaseModel):
+    username: str
     firstname: str
     lastname: str
     secondname: str | None = None
