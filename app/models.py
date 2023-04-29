@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, date
 
 
 class User(BaseModel):
@@ -7,7 +7,7 @@ class User(BaseModel):
     firstname: str
     lastname: str
     secondname: str | None = None
-    birthdate: datetime
+    birthdate: date
     password: str
 
 
