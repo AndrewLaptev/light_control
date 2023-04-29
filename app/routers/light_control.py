@@ -11,13 +11,8 @@ async def get_control_panel():
     pass
 
 
-@light_router.get("/temperature")
-async def get_temperature():
-    pass
-
-
-@light_router.get("/brightness")
-async def get_brightness():
+@light_router.get("/lamp-data")
+async def get_data():
     pass
 
 
