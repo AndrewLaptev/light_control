@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  adminer:
+    image: adminer:4.8.1
+    container_name: light_control_adminer
+    volumes:
+      - ./volumes/adminer:/var/www/html/plugins-enabled
+      - ./$DBMS_PATH:/home
+    environment:
+      DBMS_ADMINER_PASSWORD: $DBMS_ADMINER_PASSWORD
+      ADMINER_DESIGN: pepa-linha
+    ports:
+      - 10000:8080
+
+  light_control:
+    image: light_control
+    container_name: light_control
+    build: .
+    volumes:
+      - ./volumes/dbms:/service/volumes/dbms
+    ports:
+      - 8085:8080
