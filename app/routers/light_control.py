@@ -1,7 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+
+from ..security import oauth2_scheme
 
 
-light_router = APIRouter(prefix="/light", tags=["light"])
+light_router = APIRouter(prefix="/light", tags=["light"], dependencies=[Depends(oauth2_scheme)])
 
 
 @light_router.get("/control-panel")

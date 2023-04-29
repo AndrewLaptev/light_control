@@ -17,3 +17,13 @@ class Action(BaseModel):
     lamp: int
     temperature: int
     brightness: int
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+
+class TokenPayload(BaseModel):
+    sub: str | None = None
+    exp: str | None = None

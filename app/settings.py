@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     dbms_path: str
     dbms_fullname: str | None = None
 
+    jwt_secret_key: str
+    jwt_token_expire_days: str
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
