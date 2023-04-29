@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     dbms_fullname: str | None = None
 
     jwt_secret_key: str
-    jwt_token_expire_days: str
+    jwt_token_expire_days: int
 
     class Config:
         env_file = ".env"

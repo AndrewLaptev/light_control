@@ -26,4 +26,4 @@ class Token(BaseModel):
 
 class TokenPayload(BaseModel):
     sub: str | None = None
-    exp: str | None = None
+    exp: datetime | None = None

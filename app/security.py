@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
@@ -17,7 +17,8 @@ def check_token_expire(expire: date) -> bool:
 def create_token(username: str) -> Token:
     token_payload = TokenPayload(
         sub=username,
-        expire=date.today() + timedelta(days=settings.jwt_token_expire_days),
+        exp=datetime.utcnow()
+        + timedelta(days=settings.jwt_token_expire_days),
     )
     return Token(
         access_token=jwt.encode(token_payload.dict(), settings.jwt_secret_key)
