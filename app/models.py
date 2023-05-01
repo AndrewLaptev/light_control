@@ -1,18 +1,17 @@
 from pydantic import BaseModel
-from datetime import datetime, date
+from datetime import datetime
 
 
 class User(BaseModel):
-    username: str
+    email: str
     firstname: str
     lastname: str
     secondname: str | None = None
-    birthdate: date
     password: str
 
 
 class Action(BaseModel):
-    username: str
+    user_id: str
     time: datetime
     lamp: int
     temperature: int
@@ -21,7 +20,6 @@ class Action(BaseModel):
 
 class Token(BaseModel):
     access_token: str
-    token_type: str = "bearer"
 
 
 class TokenPayload(BaseModel):

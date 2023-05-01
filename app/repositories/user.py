@@ -13,25 +13,23 @@ class UserRepository:
 
     async def new_user(self, user: User) -> bool:
         try:
-            if await self.get_user(user.username):
+            if await self.get_user(user.email):
                 return False
 
             await self.db.execute(
                 f"""
                     INSERT INTO users (
-                        username, 
+                        email, 
                         firstname,
                         lastname,
                         secondname,
-                        birthdate,
                         password
                     )
                     VALUES (
-                        '{user.username}',
+                        '{user.email}',
                         '{user.firstname.capitalize()}',
                         '{user.lastname.capitalize()}',
                         '{user.secondname.capitalize()}',
-                        '{user.birthdate}',
                         '{user.password}'
                     );
                 """
@@ -45,22 +43,21 @@ class UserRepository:
 
         return True
 
-    async def get_user(self, username: str) -> User | None:
+    async def get_user(self, email: str) -> User | None:
         try:
             cursor = await self.db.execute(
                 f"""
                     SELECT * FROM users
-                    WHERE username = '{username}'
+                    WHERE email = '{email}'
                 """
             )
             if user_row := await cursor.fetchone():
                 user = User(
-                    username=user_row[0],
+                    email=user_row[0],
                     firstname=user_row[1],
                     lastname=user_row[2],
                     secondname=user_row[3],
-                    birthdate=user_row[4],
-                    password=user_row[5],
+                    password=user_row[4],
                 )
                 return user
             else:

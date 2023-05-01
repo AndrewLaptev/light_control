@@ -1,16 +1,12 @@
 from typing import Annotated
 from datetime import timedelta, datetime
 
-from fastapi import HTTPException, Depends
-from fastapi.security import OAuth2PasswordBearer
+from fastapi import HTTPException, Request, Depends, Cookie
 from jose import jwt, JWTError
 
 from .models import Token, TokenPayload
 from .settings import settings
 from .repositories import UserRepository
-
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 def create_token(username: str) -> Token:
@@ -23,18 +19,39 @@ def create_token(username: str) -> Token:
     )
 
 
-async def check_token(
-    src_token: Annotated[str, Depends(oauth2_scheme)],
+async def verify_token(
+    *,
     users: Annotated[UserRepository, Depends()],
+    light_control_token: Annotated[str, Cookie()] = None,
 ):
+    if not light_control_token:
+        raise HTTPException(status_code=401)
+
     incorrect_token = HTTPException(status_code=400, detail="Incorrect token!")
     try:
         token_payload = TokenPayload.parse_obj(
-            jwt.decode(src_token, settings.jwt_secret_key)
+            jwt.decode(light_control_token, settings.jwt_secret_key)
         )
         user = await users.get_user(token_payload.sub)
 
-        if not user or token_payload.exp.timestamp() < datetime.utcnow().timestamp():
+        if (
+            not user
+            or token_payload.exp.timestamp() < datetime.utcnow().timestamp()
+        ):
             raise incorrect_token
     except JWTError:
         raise incorrect_token
+
+
+async def check_token(request: Request, users: UserRepository) -> bool:
+    try:
+        if auth_data := request.cookies.get("light_control_token"):
+            await verify_token(
+                light_control_token=auth_data, users=users
+            )
+        else:
+            return False
+    except HTTPException:
+        return False
+
+    return True

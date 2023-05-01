@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Light control</title>
+    <link rel="icon" type="image/x-icon" href="static/images/favicon.png">
+    <link rel="stylesheet" href="static/login_style.css">
+</head>
+
+<body>
+    <!-- partial:index.partial.html -->
+    <div class="wrapper">
+        <div class="title-text">
+            <div class="title login">Вход</div>
+            <div class="title signup">Регистрация</div>
+        </div>
+        <div class="form-container">
+            <div class="slide-controls">
+                <input type="radio" name="slide" id="login" checked>
+                <input type="radio" name="slide" id="signup">
+                <label for="login" class="slide login">Вход</label>
+                <label for="signup" class="slide signup">Регистрация</label>
+                <div class="slider-tab"></div>
+            </div>
+            <div class="form-inner">
+                <form action="/auth/signin" class="login", method="post">
+                    <div class="field">
+                        <input name="username" type="email" placeholder="Почта" required>
+                    </div>
+                    <div class="field">
+                        <input name="password" type="password" placeholder="Пароль" required>
+                    </div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Войти">
+                    </div>
+                </form>
+                <form action="/auth/signup" class="signup", method="post">
+                    <div class="field">
+                        <input name="email" type="email" placeholder="Почта" required>
+                    </div>
+                    <div class="field">
+                        <input name="firstname" type="text" placeholder="Фамилия" required>
+                    </div>
+                    <div class="field">
+                        <input name="lastname" type="text" placeholder="Имя" required>
+                    </div>
+                    <div class="field">
+                        <input name="secondname" type="text" placeholder="Отчество">
+                    </div>
+                    <div class="field">
+                        <input name="password" type="password" placeholder="Пароль" required>
+                    </div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Зерегистрироваться">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- partial -->
+    <script src="static/login_script.js"></script>
+
+</body>
+
+</html>

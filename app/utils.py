@@ -28,11 +28,10 @@ async def init_dbms(db: Connection):
     await db.execute(
         """
             CREATE TABLE IF NOT EXISTS users (
-                username TEXT PRIMARY KEY,
+                email TEXT PRIMARY KEY,
                 firstname TEXT NOT NULL,
                 lastname TEXT NOT NULL,
                 secondname TEXT NULL,
-                birthdate TEXT NOT NULL,
                 password TEXT NOT NULL
             );
         """
@@ -42,12 +41,12 @@ async def init_dbms(db: Connection):
         """
             CREATE TABLE IF NOT EXISTS actions (
                 id INTEGER PRIMARY KEY,
-                username TEXT,
+                user_id TEXT,
                 time TEXT,
                 lamp INTEGER,
                 temperature INTEGER,
                 brightness INTEGER,
-                FOREIGN KEY(username) REFERENCES users(username)
+                FOREIGN KEY(user_id) REFERENCES users(email)
             );
         """
     )

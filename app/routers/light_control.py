@@ -1,14 +1,9 @@
 from fastapi import APIRouter, Depends
 
-from ..security import check_token
+from ..security import verify_token
 
 
-light_router = APIRouter(prefix="/light", tags=["light"], dependencies=[Depends(check_token)])
-
-
-@light_router.get("/control-panel")
-async def get_control_panel():
-    pass
+light_router = APIRouter(prefix="/light", tags=["light"], dependencies=[Depends(verify_token)])
 
 
 @light_router.get("/lamp-data")

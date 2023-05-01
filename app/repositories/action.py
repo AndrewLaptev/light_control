@@ -16,14 +16,14 @@ class ActionRepository:
             await self.db.execute(
                 f"""
                     INSERT INTO actions (
-                        username,
+                        user_id,
                         time,
                         lamp,
                         temperature,
                         brightness
                     )
                     VALUES (
-                        '{action.username}',
+                        '{action.user_id}',
                         '{action.time}',
                         '{action.lamp}',
                         '{action.temperature}',
