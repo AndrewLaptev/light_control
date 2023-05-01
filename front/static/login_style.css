@@ -115,6 +115,11 @@ input[type="radio"] {
     overflow: hidden;
 }
 
+.form-container .sign-error {
+    text-align: center;
+    color: #ff0606;
+}
+
 .form-container .form-inner {
     display: flex;
     width: 200%;

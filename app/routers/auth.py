@@ -1,8 +1,7 @@
 from typing import Annotated
 
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, Response, status, Depends
 from fastapi.security import OAuth2PasswordRequestForm
-from fastapi.responses import RedirectResponse
 
 from ..models import User, Token
 from ..security import create_token
@@ -13,8 +12,8 @@ auth_router = APIRouter(prefix="/auth", tags=["auth"])
 UsersRep = Annotated[UserRepository, Depends()]
 
 
-@auth_router.post("/signup", response_class=RedirectResponse)
-async def signup(user: User, users: UsersRep) -> RedirectResponse:
+@auth_router.post("/signup", response_class=Response)
+async def signup(user: User, users: UsersRep) -> Response:
     if not await users.new_user(user):
         raise HTTPException(
             status_code=400, detail="Current user already exist!"
@@ -28,12 +27,12 @@ async def signup(user: User, users: UsersRep) -> RedirectResponse:
         )
 
 
-@auth_router.post("/signin", response_class=RedirectResponse)
+@auth_router.post("/signin", response_class=Response)
 async def signin(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()], users: UsersRep
-) -> RedirectResponse:
+) -> Response:
     token_ = await token(form_data, users)
-    response = RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
+    response = Response(status_code=status.HTTP_200_OK)
     response.set_cookie(
         key="light_control_token",
         value=token_.access_token,
