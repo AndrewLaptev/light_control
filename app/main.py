@@ -18,7 +18,7 @@ app.include_router(light_router)
 app.mount("/static", StaticFiles(directory="front/static"), name="static")
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse, tags=["root"])
 async def get_page(
     request: Request, users: Annotated[UserRepository, Depends()]
 ):

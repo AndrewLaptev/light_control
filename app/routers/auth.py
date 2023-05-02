@@ -1,7 +1,8 @@
 from typing import Annotated
 
-from fastapi import APIRouter, HTTPException, Response, status, Depends
+from fastapi import APIRouter, HTTPException, Request, status, Depends
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.responses import Response, RedirectResponse
 
 from ..models import User, Token
 from ..security import create_token
@@ -12,18 +13,18 @@ auth_router = APIRouter(prefix="/auth", tags=["auth"])
 UsersRep = Annotated[UserRepository, Depends()]
 
 
-@auth_router.post("/signup", response_class=Response)
-async def signup(user: User, users: UsersRep) -> Response:
-    if not await users.new_user(user):
-        raise HTTPException(
-            status_code=400, detail="Current user already exist!"
-        )
+@auth_router.post("/token")
+async def token(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()], users: UsersRep
+) -> Token:
+    if user := await users.get_user(form_data.username):
+        if user.password == form_data.password:
+            return create_token(user.email)
+        else:
+            raise HTTPException(status_code=400, detail="Incorrect password!")
     else:
-        return await signin(
-            OAuth2PasswordRequestForm(
-                username=user.email, password=user.password, scope=""
-            ),
-            users,
+        raise HTTPException(
+            status_code=400, detail="Current user does not exist!"
         )
 
 
@@ -41,16 +42,23 @@ async def signin(
     return response
 
 
-@auth_router.post("/token")
-async def token(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()], users: UsersRep
-) -> Token:
-    if user := await users.get_user(form_data.username):
-        if user.password == form_data.password:
-            return create_token(user.email)
-        else:
-            raise HTTPException(status_code=400, detail="Incorrect password!")
-    else:
+@auth_router.get("/signout", response_class=RedirectResponse)
+async def signout() -> RedirectResponse:
+    response = RedirectResponse("/", status_code=status.HTTP_302_FOUND)
+    response.delete_cookie(key="light_control_token")
+    return response
+
+
+@auth_router.post("/signup", response_class=Response)
+async def signup(user: User, users: UsersRep) -> Response:
+    if not await users.new_user(user):
         raise HTTPException(
-            status_code=400, detail="Current user does not exist!"
+            status_code=400, detail="Current user already exist!"
+        )
+    else:
+        return await signin(
+            OAuth2PasswordRequestForm(
+                username=user.email, password=user.password, scope=""
+            ),
+            users,
         )

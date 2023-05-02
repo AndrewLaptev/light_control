@@ -1,7 +1,7 @@
-const loginText = document.querySelector(".title-text .login");
+const signinText = document.querySelector(".title-text .login");
 const signinForm = document.querySelector("form.login");
 const signupForm = document.querySelector("form.signup");
-const loginLabelBtn = document.querySelector("label.login");
+const singinLabelBtn = document.querySelector("label.login");
 const signupLabelBtn = document.querySelector("label.signup");
 const innerForm = document.querySelector(".form-inner");
 const signError = document.querySelector(".sign-error");
@@ -15,14 +15,14 @@ innerForm.style.height = LOGIN_SIZE;
 
 signupLabelBtn.onclick = (() => {
     signinForm.style.marginLeft = "-50%";
-    loginText.style.marginLeft = "-50%";
+    signinText.style.marginLeft = "-50%";
     innerForm.style.height = SIGNUP_SIZE;
     signError.innerText = "";
 
 });
-loginLabelBtn.onclick = (() => {
+singinLabelBtn.onclick = (() => {
     signinForm.style.marginLeft = "0%";
-    loginText.style.marginLeft = "0%";
+    signinText.style.marginLeft = "0%";
     innerForm.style.height = LOGIN_SIZE;
     signError.innerText = "";
 });
