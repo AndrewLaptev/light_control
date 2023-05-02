@@ -2,10 +2,9 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 
 
-body {
+html {
     font-family: 'Poppins', sans-serif;
 }
-
 
 .container {
     padding-top: 5%;
@@ -69,7 +68,6 @@ body {
 .side-menu li a {
     display: block;
     font-size: 1rem;
-    /* text-transform: uppercase; */
     text-decoration: none;
     color: #FFF;
     height: 60px;

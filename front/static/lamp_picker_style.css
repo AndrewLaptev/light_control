@@ -2,11 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 
 
-* {
-    font-family: 'Poppins', sans-serif;
-}
-
-
 ::selection {
     background: transparent;
 }
@@ -26,6 +21,7 @@ input {
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 10%;
 }
 
 .lamp-num-container label {
