@@ -38,18 +38,11 @@ class Slider {
     }
 };
 
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
 
 let lightTempElement = document.querySelector('.light-temperature [type="range"]')
 let lightTempValueElement = document.querySelector('.light-temperature__value span')
 let lightBrightElement = document.querySelector('.light-brightness [type="range"]')
 let lightBrightValueElement = document.querySelector('.light-brightness__value span')
-
 
 let lightTempOptions = {
     min: 2700,
@@ -64,7 +57,6 @@ let lightBrightOptions = {
     cur: (color_temp = getCookie("color_bright")) ? color_temp : 0,
     measure: '%'
 }
-
 
 let lightTempSlider = new Slider(lightTempElement, lightTempValueElement, "color_temp", sendDataBtn, lightTempOptions)
 let lightBrightSlider = new Slider(lightBrightElement, lightBrightValueElement, "color_bright", sendDataBtn, lightBrightOptions)

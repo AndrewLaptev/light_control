@@ -49,17 +49,12 @@ async function signin(event) {
     response = await fetch(signinForm.action, fetchOptions);
 
     if (response.status != 200) {
-        await errorInfo(response)
+        signError.innerText = await errorInfo(response)
     } else {
         window.location.replace("/");
         document.cookie = `username=${myFormData.get("username")}`;
     }
 };
-
-async function errorInfo(response) {
-    error = await response.json()
-    signError.innerText = error["detail"]
-}
 
 
 signupLabelBtn.onclick = (() => {

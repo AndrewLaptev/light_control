@@ -15,12 +15,38 @@ html {
     width: 50%;
 }
 
+.sending-response-err,
+.sending-response-ok {
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 15px;
+    background: rgba(167, 245, 167, 0.719);
+    color: green;
+    padding: 2%;
+    text-align: center;
+    opacity: 0;
+}
+
+.sending-response-err {
+    background: rgba(245, 189, 167, 0.719);
+    color: rgb(235, 63, 63);
+}
+
+.show-response {
+    opacity: 1;
+    transition: opacity 0.3s linear;
+}
+
+.hide-response {
+    opacity: 0;
+    transition: opacity 0.3s linear;
+}
 
 .send-button {
     text-transform: uppercase;
     height: 50px;
     width: 100%;
-    margin-top: 15%;
+    margin-top: 5%;
     border: none;
     border-radius: 15px;
     position: relative;
@@ -87,7 +113,13 @@ html {
         width: auto;
     }
 
+    .sending-response-err,
+    .sending-response-ok {
+        padding: 5%;
+        margin-top: 10%;
+    }
+
     .send-button {
-        margin-top: 30%;
+        margin-top: 20%;
     }
 }

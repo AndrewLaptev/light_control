@@ -4,12 +4,6 @@ const minus = inputContainer.firstElementChild;
 const plus = inputContainer.lastElementChild;
 
 
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
 function changeNumber(e) {
     if (e.target == minus) {
         if (input.value > 1) {
@@ -24,17 +18,19 @@ function changeNumber(e) {
 }
 
 async function getLampData(e) {
-    response = await fetch('light/lamp-data?' + new URLSearchParams
-        (
-            {
-                lamp_number: input.value
-            }
+    if (e.target == minus || e.target == plus) {
+        response = await fetch('light/lamp-data?' + new URLSearchParams
+            (
+                {
+                    lamp_number: input.value
+                }
+            )
         )
-    )
-    lamp_data = await response.json()
+        lamp_data = await response.json()
 
-    lightTempSlider.setSlider(lamp_data["temperature"])
-    lightBrightSlider.setSlider(lamp_data["brightness"])
+        lightTempSlider.setSlider(lamp_data["temperature"])
+        lightBrightSlider.setSlider(lamp_data["brightness"])
+    }
 }
 
 

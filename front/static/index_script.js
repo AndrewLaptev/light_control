@@ -1,6 +1,7 @@
 const slideMenuUsername = document.querySelector(".user-btn span");
 const sendDataBtn = document.querySelector(".send-button");
 const signoutBtn = document.querySelector(".signout-btn");
+const responseStatus = document.querySelector(".sending-response-ok");
 
 
 function getCookie(name) {
@@ -14,7 +15,16 @@ function deleteCookies() {
     for (var i = 0; i < Cookies.length; i++) {
         document.cookie = Cookies[i] + "=;expires=" + new Date(0).toUTCString();
     }
- }
+}
+
+async function errorInfo(response) {
+    error = await response.json()
+    return error["detail"]
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 async function sendLampActionData() {
     let data = {
@@ -35,8 +45,14 @@ async function sendLampActionData() {
     response = await fetch("light/lamp-data", fetchOptions);
 
     if (response.status != 200) {
-        console.log("Something wrong!")
+        responseStatus.className = "sending-response-err"
+        responseStatus.innerHTML = await errorInfo(response)
     }
+    responseStatus.classList.add("show-response")
+    await sleep(2000)
+    responseStatus.classList.add("hide-response")
+    await sleep(300)
+    responseStatus.classList.remove("show-response", "hide-response")
 }
 
 
