@@ -19,6 +19,10 @@ def create_token(username: str) -> Token:
     )
 
 
+def payload_token(token: str) -> TokenPayload:
+    return TokenPayload.parse_obj(jwt.decode(token, settings.jwt_secret_key))
+
+
 async def verify_token(
     *,
     users: Annotated[UserRepository, Depends()],
@@ -29,9 +33,7 @@ async def verify_token(
 
     incorrect_token = HTTPException(status_code=400, detail="Incorrect token!")
     try:
-        token_payload = TokenPayload.parse_obj(
-            jwt.decode(light_control_token, settings.jwt_secret_key)
-        )
+        token_payload = payload_token(light_control_token)
         user = await users.get_user(token_payload.sub)
 
         if (
@@ -46,9 +48,7 @@ async def verify_token(
 async def check_token(request: Request, users: UserRepository) -> bool:
     try:
         if auth_data := request.cookies.get("light_control_token"):
-            await verify_token(
-                light_control_token=auth_data, users=users
-            )
+            await verify_token(light_control_token=auth_data, users=users)
         else:
             return False
     except HTTPException:

@@ -13,7 +13,7 @@ class User(BaseModel):
 class Action(BaseModel):
     user_id: str
     time: datetime
-    lamp: int
+    lamp_number: int
     temperature: int
     brightness: int
 
@@ -27,6 +27,6 @@ class TokenPayload(BaseModel):
     exp: datetime | None = None
 
 class LampData(BaseModel):
-    number: int
+    lamp_number: int
     temperature: int
     brightness: int

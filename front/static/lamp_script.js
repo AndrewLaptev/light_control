@@ -14,7 +14,7 @@ function changeNumber(e) {
             input.value++;
         }
     }
-    document.cookie = `lamp_numb=${input.value}`;
+    document.cookie = `${COOKIE_NAME_LAMP_NUMBER}=${input.value}`;
 }
 
 async function getLampData(e) {
@@ -28,8 +28,8 @@ async function getLampData(e) {
         )
         lamp_data = await response.json()
 
-        lightTempSlider.setSlider(lamp_data["temperature"])
-        lightBrightSlider.setSlider(lamp_data["brightness"])
+        lightTempSlider.setSlider(lamp_data[COOKIE_NAME_COLOR_TEMP])
+        lightBrightSlider.setSlider(lamp_data[COOKIE_NAME_COLOR_BRIGHT])
     }
 }
 
@@ -37,6 +37,8 @@ async function getLampData(e) {
 inputContainer.addEventListener("click", changeNumber);
 inputContainer.addEventListener("click", getLampData);
 
-if (lamp_numb = getCookie("lamp_numb")) {
+if (lamp_numb = getCookie(COOKIE_NAME_LAMP_NUMBER)) {
     input.value = lamp_numb
+} else {
+    document.cookie = `${COOKIE_NAME_LAMP_NUMBER}=${document.querySelector(".lamp-num-container input").value}`;
 }

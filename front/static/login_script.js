@@ -8,7 +8,8 @@ const signError = document.querySelector(".sign-error");
 
 const LOGIN_SIZE = `${signinForm.offsetHeight / 2}px`;
 const SIGNUP_SIZE = `${signinForm.offsetHeight}px`;
-const TOKEN_NAME = 'light_control_token'
+const TOKEN_NAME = "light_control_token"
+const COOKIE_NAME_USER_ID = "username"
 
 innerForm.style.height = LOGIN_SIZE;
 
@@ -30,10 +31,10 @@ async function signup(event) {
     response = await fetch(signupForm.action, fetchOptions);
 
     if (response.status != 200) {
-        await errorInfo(response)
+        console.log(errorInfo(response))
     } else {
         window.location.replace("/");
-        document.cookie = `username=${myFormData.get("email")}`;
+        document.cookie = `${COOKIE_NAME_USER_ID}=${myFormData.get("email")}`;
     }
 };
 
@@ -52,7 +53,7 @@ async function signin(event) {
         signError.innerText = await errorInfo(response)
     } else {
         window.location.replace("/");
-        document.cookie = `username=${myFormData.get("username")}`;
+        document.cookie = `${COOKIE_NAME_USER_ID}=${myFormData.get("username")}`;
     }
 };
 

@@ -47,19 +47,19 @@ let lightBrightValueElement = document.querySelector('.light-brightness__value s
 let lightTempOptions = {
     min: 2700,
     max: 6500,
-    cur: (color_temp = getCookie("color_temp")) ? color_temp : 2700,
+    cur: (color_temp = getCookie(COOKIE_NAME_COLOR_TEMP)) ? color_temp : 2700,
     measure: 'K'
 }
 
 let lightBrightOptions = {
     min: 0,
     max: 100,
-    cur: (color_temp = getCookie("color_bright")) ? color_temp : 0,
+    cur: (color_temp = getCookie(COOKIE_NAME_COLOR_BRIGHT)) ? color_temp : 0,
     measure: '%'
 }
 
-let lightTempSlider = new Slider(lightTempElement, lightTempValueElement, "color_temp", sendDataBtn, lightTempOptions)
-let lightBrightSlider = new Slider(lightBrightElement, lightBrightValueElement, "color_bright", sendDataBtn, lightBrightOptions)
+let lightTempSlider = new Slider(lightTempElement, lightTempValueElement, COOKIE_NAME_COLOR_TEMP, sendDataBtn, lightTempOptions)
+let lightBrightSlider = new Slider(lightBrightElement, lightBrightValueElement, COOKIE_NAME_COLOR_BRIGHT, sendDataBtn, lightBrightOptions)
 
 lightTempSlider.init()
 lightBrightSlider.init()

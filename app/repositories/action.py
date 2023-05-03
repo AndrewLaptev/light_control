@@ -4,7 +4,7 @@ from aiosqlite import Connection
 from fastapi import HTTPException, Depends
 
 from ..models import Action
-from ..utils import db_session
+from ..libs.sqlite import db_session
 
 
 class ActionRepository:
@@ -25,7 +25,7 @@ class ActionRepository:
                     VALUES (
                         '{action.user_id}',
                         '{action.time}',
-                        '{action.lamp}',
+                        '{action.lamp_number}',
                         '{action.temperature}',
                         '{action.brightness}'
                     );

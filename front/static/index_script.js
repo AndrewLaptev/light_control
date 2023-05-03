@@ -3,6 +3,11 @@ const sendDataBtn = document.querySelector(".send-button");
 const signoutBtn = document.querySelector(".signout-btn");
 const responseStatus = document.querySelector(".sending-response-ok");
 
+const COOKIE_NAME_LAMP_NUMBER = "lamp_number"
+const COOKIE_NAME_COLOR_TEMP = "temperature"
+const COOKIE_NAME_COLOR_BRIGHT = "brightness"
+const COOKIE_NAME_USER_ID = "username"
+
 
 function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -19,7 +24,11 @@ function deleteCookies() {
 
 async function errorInfo(response) {
     error = await response.json()
-    return error["detail"]
+    if (typeof error["detail"] == "object") {
+        return "Something went wrong!"
+    } else {
+        return error["detail"]
+    }
 }
 
 function sleep(ms) {
@@ -28,9 +37,9 @@ function sleep(ms) {
 
 async function sendLampActionData() {
     let data = {
-        number: getCookie("lamp_numb"),
-        temperature: getCookie("color_temp"),
-        brightness: getCookie("color_bright")
+        lamp_number: getCookie(COOKIE_NAME_LAMP_NUMBER),
+        temperature: getCookie(COOKIE_NAME_COLOR_TEMP),
+        brightness: getCookie(COOKIE_NAME_COLOR_BRIGHT)
     }
 
     let fetchOptions = {
@@ -47,6 +56,9 @@ async function sendLampActionData() {
     if (response.status != 200) {
         responseStatus.className = "sending-response-err"
         responseStatus.innerHTML = await errorInfo(response)
+    } else {
+        responseStatus.className = "sending-response-ok"
+        responseStatus.innerHTML = "Ok"
     }
     responseStatus.classList.add("show-response")
     await sleep(2000)
@@ -56,6 +68,6 @@ async function sendLampActionData() {
 }
 
 
-slideMenuUsername.after(getCookie("username"))
+slideMenuUsername.after(getCookie(COOKIE_NAME_USER_ID))
 sendDataBtn.addEventListener("click", sendLampActionData)
 signoutBtn.addEventListener("click", deleteCookies)

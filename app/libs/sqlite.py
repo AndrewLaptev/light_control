@@ -4,7 +4,7 @@ from typing import AsyncGenerator
 import aiosqlite
 from aiosqlite import Connection
 
-from .settings import settings
+from ..settings import settings
 
 
 async def db_session() -> AsyncGenerator[Connection, None]:

@@ -6,9 +6,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 
 from .security import check_token
-from .routers import auth_router, light_router
-from .utils import init_dbms, healthcheck_dbms, db_session
 from .repositories import UserRepository
+from .routers import auth_router, light_router
+from .libs.sqlite import init_dbms, healthcheck_dbms, db_session
 
 
 app = FastAPI(title="Light control")

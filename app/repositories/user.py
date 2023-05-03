@@ -4,7 +4,7 @@ from aiosqlite import Connection, DatabaseError
 from fastapi import HTTPException, Depends
 
 from ..models import User
-from ..utils import db_session
+from ..libs.sqlite import db_session
 
 
 class UserRepository:
