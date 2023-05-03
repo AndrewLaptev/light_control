@@ -1,7 +1,6 @@
-const inputContainer = document.querySelector(".input-container");
-const input = inputContainer.firstElementChild.nextElementSibling;
-const minus = inputContainer.firstElementChild;
-const plus = inputContainer.lastElementChild;
+const slideMenuUsername = document.querySelector(".user-btn span");
+const sendDataBtn = document.querySelector(".send-button");
+const signoutBtn = document.querySelector(".signout-btn");
 
 
 function getCookie(name) {
@@ -10,22 +9,37 @@ function getCookie(name) {
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
-function changeNumber(e) {
-    if (e.target == minus) {
-        if (input.value > 1) {
-            input.value--;
-        }
-    } else if (e.target == plus) {
-        if (input.value < 8) {
-            input.value++;
-        }
+function deleteCookies() {
+    var Cookies = document.cookie.split(';');
+    for (var i = 0; i < Cookies.length; i++) {
+        document.cookie = Cookies[i] + "=;expires=" + new Date(0).toUTCString();
     }
-    document.cookie = `lamp_numb=${input.value}`;
+ }
+
+async function sendLampActionData() {
+    let data = {
+        number: getCookie("lamp_numb"),
+        temperature: getCookie("color_temp"),
+        brightness: getCookie("color_bright")
+    }
+
+    let fetchOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+        body: JSON.stringify(data),
+    };
+
+    response = await fetch("light/lamp-data", fetchOptions);
+
+    if (response.status != 200) {
+        console.log("Something wrong!")
+    }
 }
 
 
-inputContainer.addEventListener("click", changeNumber);
-
-if (lamp_numb = getCookie("lamp_numb")) {
-    input.value = lamp_numb
-}
+slideMenuUsername.after(getCookie("username"))
+sendDataBtn.addEventListener("click", sendLampActionData)
+signoutBtn.addEventListener("click", deleteCookies)

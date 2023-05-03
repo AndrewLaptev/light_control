@@ -10,30 +10,9 @@ const LOGIN_SIZE = `${signinForm.offsetHeight / 2}px`;
 const SIGNUP_SIZE = `${signinForm.offsetHeight}px`;
 const TOKEN_NAME = 'light_control_token'
 
-
 innerForm.style.height = LOGIN_SIZE;
 
-signupLabelBtn.onclick = (() => {
-    signinForm.style.marginLeft = "-50%";
-    signinText.style.marginLeft = "-50%";
-    innerForm.style.height = SIGNUP_SIZE;
-    signError.innerText = "";
 
-});
-singinLabelBtn.onclick = (() => {
-    signinForm.style.marginLeft = "0%";
-    signinText.style.marginLeft = "0%";
-    innerForm.style.height = LOGIN_SIZE;
-    signError.innerText = "";
-});
-
-
-async function errorInfo(response) {
-    error = await response.json()
-    signError.innerText = error["detail"]
-}
-
-signupForm.addEventListener('submit', signup);
 async function signup(event) {
     event.preventDefault();
     const myFormData = new FormData(event.target);
@@ -54,10 +33,10 @@ async function signup(event) {
         await errorInfo(response)
     } else {
         window.location.replace("/");
+        document.cookie = `username=${myFormData.get("email")}`;
     }
 };
 
-signinForm.addEventListener('submit', signin);
 async function signin(event) {
     event.preventDefault();
     const myFormData = new FormData(event.target);
@@ -73,5 +52,29 @@ async function signin(event) {
         await errorInfo(response)
     } else {
         window.location.replace("/");
+        document.cookie = `username=${myFormData.get("username")}`;
     }
 };
+
+async function errorInfo(response) {
+    error = await response.json()
+    signError.innerText = error["detail"]
+}
+
+
+signupLabelBtn.onclick = (() => {
+    signinForm.style.marginLeft = "-50%";
+    signinText.style.marginLeft = "-50%";
+    innerForm.style.height = SIGNUP_SIZE;
+    signError.innerText = "";
+
+});
+singinLabelBtn.onclick = (() => {
+    signinForm.style.marginLeft = "0%";
+    signinText.style.marginLeft = "0%";
+    innerForm.style.height = LOGIN_SIZE;
+    signError.innerText = "";
+});
+
+signupForm.addEventListener('submit', signup);
+signinForm.addEventListener('submit', signin);

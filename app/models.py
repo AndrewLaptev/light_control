@@ -25,3 +25,8 @@ class Token(BaseModel):
 class TokenPayload(BaseModel):
     sub: str | None = None
     exp: datetime | None = None
+
+class LampData(BaseModel):
+    number: int
+    temperature: int
+    brightness: int

@@ -22,7 +22,7 @@ def create_token(username: str) -> Token:
 async def verify_token(
     *,
     users: Annotated[UserRepository, Depends()],
-    light_control_token: Annotated[str, Cookie()] = None,
+    light_control_token: Annotated[str, Cookie()],
 ):
     if not light_control_token:
         raise HTTPException(status_code=401)

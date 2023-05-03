@@ -1,7 +1,9 @@
 class Slider {
-    constructor(rangeElement, valueElement, options) {
+    constructor(rangeElement, valueElement, sliderName, sendDataBtn, options) {
         this.rangeElement = rangeElement
         this.valueElement = valueElement
+        this.sliderName = sliderName
+        this.sendDataBtn = sendDataBtn
         this.options = options
 
         // Attach a listener to "change" event
@@ -19,14 +21,28 @@ class Slider {
 
     // Format
     asSome(value) {
-        return parseFloat(value) + this.options.measure
+        return parseFloat(value)
     }
 
-    updateSlider(newValue) {
-        this.valueElement.innerHTML = this.asSome(this.rangeElement.value)
+    updateSlider() {
+        let val = this.asSome(this.rangeElement.value)
+        this.valueElement.innerHTML = val + this.options.measure
+        document.cookie = `${this.sliderName}=${val}`;
+    }
+
+    setSlider(newValue) {
+        let val = this.asSome(newValue)
+        this.valueElement.innerHTML = val + this.options.measure
+        document.cookie = `${this.sliderName}=${val}`;
+        this.rangeElement.value = val;
     }
 };
 
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
 
 let lightTempElement = document.querySelector('.light-temperature [type="range"]')
@@ -34,24 +50,24 @@ let lightTempValueElement = document.querySelector('.light-temperature__value sp
 let lightBrightElement = document.querySelector('.light-brightness [type="range"]')
 let lightBrightValueElement = document.querySelector('.light-brightness__value span')
 
+
 let lightTempOptions = {
-    min: 2000,
-    max: 6800,
-    cur: 2000,
+    min: 2700,
+    max: 6500,
+    cur: (color_temp = getCookie("color_temp")) ? color_temp : 2700,
     measure: 'K'
 }
 
 let lightBrightOptions = {
     min: 0,
     max: 100,
-    cur: 0,
+    cur: (color_temp = getCookie("color_bright")) ? color_temp : 0,
     measure: '%'
 }
 
-if (lightTempElement) {
-    let lightTempSlider = new Slider(lightTempElement, lightTempValueElement, lightTempOptions)
-    let lightBrightSlider = new Slider(lightBrightElement, lightBrightValueElement, lightBrightOptions)
 
-    lightTempSlider.init()
-    lightBrightSlider.init()
-}
+let lightTempSlider = new Slider(lightTempElement, lightTempValueElement, "color_temp", sendDataBtn, lightTempOptions)
+let lightBrightSlider = new Slider(lightBrightElement, lightBrightValueElement, "color_bright", sendDataBtn, lightBrightOptions)
+
+lightTempSlider.init()
+lightBrightSlider.init()
