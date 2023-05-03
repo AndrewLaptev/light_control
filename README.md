@@ -13,7 +13,7 @@ Simple multi-user service for control lamps over MQTT
 
 ## How it works
 
-Deploy two docker containers with FastAPI (fronted+backend) and Adminer. User DBMS SQLite include FastAPI container and forward via volume in host OS. Connect link to DBMS for Adminer `/dbms/$DBMS_NAME` and password `$DBMS_ADMINER_PASSWORD`. These and others env vars in `.env` (`.env.example`) file
+Deploy two docker containers with FastAPI (frontend+backend) and Adminer. User DBMS SQLite include FastAPI container and forward via volume in host OS. Connect link to DBMS for Adminer `/dbms/$DBMS_NAME` and password `$DBMS_ADMINER_PASSWORD`. These and others env vars in `.env` (`.env.example`) file
 
 ## How to setup
 
