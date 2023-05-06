@@ -14,6 +14,15 @@ const COOKIE_NAME_USER_ID = "username"
 innerForm.style.height = LOGIN_SIZE;
 
 
+async function errorInfo(response) {
+    error = await response.json()
+    if (typeof error["detail"] == "object") {
+        return "Something went wrong!"
+    } else {
+        return error["detail"]
+    }
+}
+
 async function signup(event) {
     event.preventDefault();
     const myFormData = new FormData(event.target);
@@ -31,7 +40,7 @@ async function signup(event) {
     response = await fetch(signupForm.action, fetchOptions);
 
     if (response.status != 200) {
-        console.log(errorInfo(response))
+        signError.innerText = await errorInfo(response)
     } else {
         window.location.replace("/");
         document.cookie = `${COOKIE_NAME_USER_ID}=${myFormData.get("email")}`;
