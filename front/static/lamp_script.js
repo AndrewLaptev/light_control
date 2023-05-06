@@ -2,7 +2,7 @@ const inputContainer = document.querySelector(".input-container");
 const input = inputContainer.firstElementChild.nextElementSibling;
 const minus = inputContainer.firstElementChild;
 const plus = inputContainer.lastElementChild;
-var lampNumState = 0;
+var lampNumState = 1;
 
 
 function changeNumber(e) {

@@ -21,7 +21,8 @@ input {
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 10%;
+    margin-top: 5%;
+    margin-bottom: 5%;
 }
 
 .lamp-num-container label {

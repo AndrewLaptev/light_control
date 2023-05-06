@@ -47,6 +47,7 @@ html {
     height: 50px;
     width: 100%;
     margin-top: 5%;
+    margin-bottom: 5%;
     border: none;
     border-radius: 15px;
     position: relative;
@@ -97,6 +98,11 @@ html {
     text-decoration: none;
     color: #FFF;
     height: 60px;
+}
+
+.signout-li {
+    position: absolute;
+    bottom: 0;
 }
 
 .side-menu li a:hover,
