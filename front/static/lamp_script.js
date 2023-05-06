@@ -26,10 +26,22 @@ async function getLampData(e) {
                 }
             )
         )
-        lamp_data = await response.json()
 
-        lightTempSlider.setSlider(lamp_data[COOKIE_NAME_COLOR_TEMP])
-        lightBrightSlider.setSlider(lamp_data[COOKIE_NAME_COLOR_BRIGHT])
+        if (response.status != 200) {
+            responseStatus.className = "sending-response-err"
+            responseStatus.innerHTML = await errorInfo(response)
+
+            responseStatus.classList.add("show-response")
+            await sleep(2000)
+            responseStatus.classList.add("hide-response")
+            await sleep(300)
+            responseStatus.classList.remove("show-response", "hide-response")
+        } else {
+            lamp_data = await response.json()
+
+            lightTempSlider.setSlider(lamp_data[COOKIE_NAME_COLOR_TEMP])
+            lightBrightSlider.setSlider(lamp_data[COOKIE_NAME_COLOR_BRIGHT])
+        }
     }
 }
 
