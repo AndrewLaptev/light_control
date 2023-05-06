@@ -2,7 +2,7 @@ from typing import Annotated
 from datetime import timedelta, datetime
 
 from fastapi import HTTPException, Request, Depends, Cookie
-from jose import jwt, JWTError
+from jose import jwt, JWTError, ExpiredSignatureError
 
 from .models import Token, TokenPayload
 from .settings import settings
@@ -31,18 +31,16 @@ async def verify_token(
     if not light_control_token:
         raise HTTPException(status_code=401)
 
-    incorrect_token = HTTPException(status_code=400, detail="Incorrect token!")
     try:
         token_payload = payload_token(light_control_token)
-        user = await users.get_user(token_payload.sub)
+        
+        if await users.get_user(token_payload.sub) is None:
+            raise JWTError
 
-        if (
-            not user
-            or token_payload.exp.timestamp() < datetime.utcnow().timestamp()
-        ):
-            raise incorrect_token
+    except ExpiredSignatureError:
+        raise HTTPException(status_code=400, detail="Session expired!")
     except JWTError:
-        raise incorrect_token
+        raise HTTPException(status_code=400, detail="Incorrect token!")
 
 
 async def check_token(request: Request, users: UserRepository) -> bool:
