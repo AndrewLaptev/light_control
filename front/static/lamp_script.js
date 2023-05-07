@@ -51,6 +51,24 @@ async function getLampData(e) {
     }
 }
 
+async function initLampData() {
+    response = await fetch('light/lamp-data?' + new URLSearchParams
+        (
+            {
+                lamp_number: input.value
+            }
+        )
+    )
+    if (response.status != 200) {
+        console.log(response.statusText)
+    } else {
+        lamp_data = await response.json()
+
+        lightTempSlider.setSlider(lamp_data[COOKIE_NAME_COLOR_TEMP])
+        lightBrightSlider.setSlider(lamp_data[COOKIE_NAME_COLOR_BRIGHT])
+    }
+}
+
 
 inputContainer.addEventListener("click", changeNumber);
 inputContainer.addEventListener("click", getLampData);
@@ -58,5 +76,6 @@ inputContainer.addEventListener("click", getLampData);
 if (lamp_numb = getCookie(COOKIE_NAME_LAMP_NUMBER)) {
     input.value = lamp_numb
 } else {
+    initLampData();
     document.cookie = `${COOKIE_NAME_LAMP_NUMBER}=${document.querySelector(".lamp-num-container input").value}`;
 }
