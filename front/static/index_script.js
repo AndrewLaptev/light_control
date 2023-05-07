@@ -1,7 +1,13 @@
 const slideMenuUsername = document.querySelector(".user-btn span");
 const sendDataBtn = document.querySelector(".send-button");
 const signoutBtn = document.querySelector(".signout-btn");
+const sideMenu = document.querySelector(".side-menu");
+const menuBtn = document.querySelector(".menu-btn");
+const planBtn = document.querySelector(".plan-btn");
+const userBtn = document.querySelector(".user-btn");
 const responseStatus = document.querySelector(".sending-response-ok");
+const mainContainer = document.querySelector(".main-container");
+const planContainer = document.querySelector(".plan-container");
 
 const COOKIE_NAME_LAMP_NUMBER = "lamp_number"
 const COOKIE_NAME_COLOR_TEMP = "temperature"
@@ -22,6 +28,36 @@ function deleteCookies() {
     }
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function showPlan() {
+    mainContainer.hidden = true;
+    planContainer.hidden = false;
+}
+
+function hidePlan() {
+    mainContainer.hidden = false;
+    planContainer.hidden = true;
+}
+
+function toggleHoverSideMenu() {
+    current_width = parseInt(sideMenu.style.width, 10)
+    if (current_width < 300 || isNaN(current_width)) {
+        sideMenu.style.width = "300px"
+    } else {
+        sideMenu.style.width = "60px"
+    }
+}
+
+function hideSideMenu() {
+    current_width = parseInt(sideMenu.style.width, 10)
+    if (sideMenu.style.width == "300px") {
+        sideMenu.style.width = "60px"
+    }
+}
+
 async function errorInfo(response) {
     error = await response.json()
     if (typeof error["detail"] == "object") {
@@ -29,10 +65,6 @@ async function errorInfo(response) {
     } else {
         return error["detail"]
     }
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function sendLampActionData() {
@@ -71,3 +103,8 @@ async function sendLampActionData() {
 slideMenuUsername.after(getCookie(COOKIE_NAME_USER_ID))
 sendDataBtn.addEventListener("click", sendLampActionData)
 signoutBtn.addEventListener("click", deleteCookies)
+menuBtn.addEventListener("click", toggleHoverSideMenu)
+planBtn.addEventListener("click", showPlan)
+planBtn.addEventListener("click", hideSideMenu)
+userBtn.addEventListener("click", hidePlan)
+userBtn.addEventListener("click", hideSideMenu)

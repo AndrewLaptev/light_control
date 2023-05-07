@@ -6,13 +6,23 @@ html {
     font-family: 'Poppins', sans-serif;
 }
 
-.container {
+.main-container {
     padding-top: 5%;
     padding-left: 15%;
     padding-right: 15%;
     margin-left: 10%;
     margin-right: 10%;
     width: 50%;
+}
+
+.plan-container {
+    margin-left: 17%;
+    overflow: auto;
+}
+
+.plan-container img {
+    width: 80%;
+    height: auto;
 }
 
 .sending-response-err,
@@ -112,11 +122,22 @@ html {
 }
 
 @media (max-aspect-ratio: 1/1) {
-    .container {
+
+    .plan-container,
+    .main-container {
         padding: 15%;
         padding-left: 25%;
         margin: 15% auto;
         width: auto;
+    }
+
+    .side-menu:hover {
+        width: 60px;
+    }
+
+    .plan-container img {
+        width: 700px;
+        height: auto;
     }
 
     .sending-response-err,
