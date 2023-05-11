@@ -34,6 +34,6 @@ async def send_data(
         Action(
             user_id=token_data.sub,
             time=datetime.utcnow(),
-            **lamp_data.dict()
+            lamp_data=lamp_data
         )
     )

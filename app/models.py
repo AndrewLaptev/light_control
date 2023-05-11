@@ -10,12 +10,16 @@ class User(BaseModel):
     password: str
 
 
+class LampData(BaseModel):
+    lamp_number: int
+    temperature: int = 2700
+    brightness: int = 0
+
+
 class Action(BaseModel):
     user_id: str
     time: datetime
-    lamp_number: int
-    temperature: int
-    brightness: int
+    lamp_data: LampData
 
 
 class Token(BaseModel):
@@ -25,8 +29,3 @@ class Token(BaseModel):
 class TokenPayload(BaseModel):
     sub: str | None = None
     exp: datetime | None = None
-
-class LampData(BaseModel):
-    lamp_number: int
-    temperature: int
-    brightness: int
