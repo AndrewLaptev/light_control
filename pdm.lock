@@ -91,6 +91,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "fastapi-mqtt"
+version = "1.0.7"
+requires_python = ">=3.7,<4.0"
+summary = "fastapi-mqtt is extension for MQTT protocol"
+dependencies = [
+    "fastapi<1.0.0",
+    "gmqtt<0.7.0,>=0.6.11",
+    "pydantic<2.0.0,>=1.9.0",
+    "uvicorn>=0.19.0",
+]
+
+[[package]]
 name = "fastapi"
 version = "0.95.1"
 extras = ["all"]
@@ -108,6 +120,12 @@ dependencies = [
     "ujson!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0,>=4.0.1",
     "uvicorn[standard]>=0.12.0",
 ]
+
+[[package]]
+name = "gmqtt"
+version = "0.6.12"
+requires_python = ">=3.5"
+summary = "Client for MQTT protocol"
 
 [[package]]
 name = "h11"
@@ -330,7 +348,7 @@ summary = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
 [metadata]
 lock_version = "4.2"
 groups = ["default"]
-content_hash = "sha256:1de0399e7bd7aa4f3cd8a701b666a411a90fef045f41d0ceb47f02490960ac8f"
+content_hash = "sha256:f14d766ad3d3649ff91fe78f5c86dcedd09037b5d1ed86380b1ca41858e7fdbb"
 
 [metadata.files]
 "aiosqlite 0.19.0" = [
@@ -455,6 +473,14 @@ content_hash = "sha256:1de0399e7bd7aa4f3cd8a701b666a411a90fef045f41d0ceb47f02490
 "fastapi 0.95.1" = [
     {url = "https://files.pythonhosted.org/packages/2e/84/d289e941ffec2f107d9097c8f7c2dbc874b0fc3fab9776aa3cc366d45ab2/fastapi-0.95.1-py3-none-any.whl", hash = "sha256:a870d443e5405982e1667dfe372663abf10754f246866056336d7f01c21dab07"},
     {url = "https://files.pythonhosted.org/packages/a9/7b/ec011cf46d78627159ab869556f246b5f823a6df8d94f7577e043a63fffd/fastapi-0.95.1.tar.gz", hash = "sha256:9569f0a381f8a457ec479d90fa01005cfddaae07546eb1f3fa035bc4797ae7d5"},
+]
+"fastapi-mqtt 1.0.7" = [
+    {url = "https://files.pythonhosted.org/packages/4c/1e/4ecfa1ecdf7d463faefbe388506604ce3eef2a3883894e338e25e4e5a284/fastapi_mqtt-1.0.7-py3-none-any.whl", hash = "sha256:be42be036bb9b0e6777947a9826b08250444b9d14723d9179195cf8ccf803bce"},
+    {url = "https://files.pythonhosted.org/packages/a4/b3/835760f4b5a00084693816fd741c2af542d93a3c12a5b403b1b9d11439da/fastapi_mqtt-1.0.7.tar.gz", hash = "sha256:a8a7153b64ae334be7b53d6ed688790f12452b62ce201cf851ab58e05249feca"},
+]
+"gmqtt 0.6.12" = [
+    {url = "https://files.pythonhosted.org/packages/70/d5/2068751c6142d3b00d485f6a25f5b283fa285b88a2914118cacb9e367add/gmqtt-0.6.12.tar.gz", hash = "sha256:7df03792343089ae62dc7cd6f8be356861c4fc68768cefa22f3d8de5e7e5be48"},
+    {url = "https://files.pythonhosted.org/packages/fd/6a/209f526f3682400056866fdf909e322a39519842fe71db0a4536ae61b2f5/gmqtt-0.6.12-py3-none-any.whl", hash = "sha256:e8acad561d52734ae622c543042836fe7a9bd20a3894378794ec763be4901a39"},
 ]
 "h11 0.14.0" = [
     {url = "https://files.pythonhosted.org/packages/95/04/ff642e65ad6b90db43e668d70ffb6736436c7ce41fcc549f4e9472234127/h11-0.14.0-py3-none-any.whl", hash = "sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761"},

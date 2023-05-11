@@ -4,7 +4,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
+from fastapi_mqtt import FastMQTT, MQTTConfig
 
+from .settings import settings
 from .security import check_token
 from .repositories import UserRepository
 from .routers import auth_router, light_router
@@ -12,6 +14,7 @@ from .libs.sqlite import init_dbms, healthcheck_dbms, db_session
 
 
 app = FastAPI(title="Light control")
+mqtt = FastMQTT(MQTTConfig(host=settings.mqtt_host, port=settings.mqtt_port))
 
 app.include_router(auth_router)
 app.include_router(light_router)
@@ -37,3 +40,8 @@ async def startup_dbms():
 
         if not await healthcheck_dbms(db):
             raise Exception("DBMS healthcheck error!")
+
+
+@app.on_event("startup")
+async def startup_mqtt():
+    mqtt.init_app(app)
