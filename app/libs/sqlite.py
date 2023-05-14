@@ -1,4 +1,5 @@
 import os
+from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
 import aiosqlite
@@ -24,7 +25,7 @@ async def healthcheck_dbms(db: Connection) -> bool:
     return True
 
 
-async def init_dbms(db: Connection):
+async def create_dbms(db: Connection):
     await db.execute(
         """
             CREATE TABLE IF NOT EXISTS users (
@@ -54,3 +55,11 @@ async def init_dbms(db: Connection):
 
     if oct(os.stat(settings.dbms_fullname).st_mode)[-3:] != "777":
         os.system("chmod 777 -R volumes/dbms")
+
+
+async def init_dbms():
+    async with asynccontextmanager(db_session)() as db:
+        await create_dbms(db)
+
+        if not await healthcheck_dbms(db):
+            raise Exception("DBMS healthcheck error!")

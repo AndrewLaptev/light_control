@@ -1,5 +1,4 @@
 from typing import Annotated
-from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
@@ -10,11 +9,25 @@ from .settings import settings
 from .security import check_token
 from .repositories import UserRepository
 from .routers import auth_router, light_router
-from .libs.sqlite import init_dbms, healthcheck_dbms, db_session
+from .logging import init_logging
+from .libs.sqlite import init_dbms
 
+
+init_logging()
 
 app = FastAPI(title="Light control")
 mqtt = FastMQTT(MQTTConfig(host=settings.mqtt_host, port=settings.mqtt_port))
+
+
+@app.on_event("startup")
+async def startup():
+    await init_dbms()
+
+
+@app.on_event("startup")
+async def startup_mqtt():
+    mqtt.init_app(app)
+
 
 app.include_router(auth_router)
 app.include_router(light_router)
@@ -31,17 +44,3 @@ async def get_page(
     else:
         with open("front/login.html", "r") as file:
             return file.read()
-
-
-@app.on_event("startup")
-async def startup_dbms():
-    async with asynccontextmanager(db_session)() as db:
-        await init_dbms(db)
-
-        if not await healthcheck_dbms(db):
-            raise Exception("DBMS healthcheck error!")
-
-
-@app.on_event("startup")
-async def startup_mqtt():
-    mqtt.init_app(app)

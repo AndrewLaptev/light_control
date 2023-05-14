@@ -4,6 +4,8 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
+    log_level: str = "ERROR"
+
     dbms_name: str
     dbms_path: str
     dbms_fullname: str | None = None
