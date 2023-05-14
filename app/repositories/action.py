@@ -25,9 +25,9 @@ class ActionRepository:
                     VALUES (
                         '{action.user_id}',
                         '{action.time}',
-                        '{action.lamp_number}',
-                        '{action.temperature}',
-                        '{action.brightness}'
+                        '{action.lamp_data.lamp_number}',
+                        '{action.lamp_data.temperature}',
+                        '{action.lamp_data.brightness}'
                     );
                 """
             )
