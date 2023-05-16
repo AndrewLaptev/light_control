@@ -162,6 +162,7 @@ cython_debug/
 
 # SQLite db
 *.db
+*.db3
 
 # Gunicorn pid file
 *.pid
