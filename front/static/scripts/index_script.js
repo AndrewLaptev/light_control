@@ -1,32 +1,16 @@
+import * as utils from "./utils.js";
+
 const slideMenuUsername = document.querySelector(".user-btn span");
-const sendDataBtn = document.querySelector(".send-button");
 const signoutBtn = document.querySelector(".signout-btn");
 const sideMenu = document.querySelector(".side-menu");
 const menuBtn = document.querySelector(".menu-btn");
 const planBtn = document.querySelector(".plan-btn");
 const userBtn = document.querySelector(".user-btn");
-const responseStatus = document.querySelector(".sending-response-ok");
 const mainContainer = document.querySelector(".main-container");
 const planContainer = document.querySelector(".plan-container");
+export const sendDataBtn = document.querySelector(".send-button");
+export const responseStatus = document.querySelector(".sending-response-ok");
 
-const COOKIE_NAME_LAMP_NUMBER = "lamp_number"
-const COOKIE_NAME_COLOR_TEMP = "temperature"
-const COOKIE_NAME_COLOR_BRIGHT = "brightness"
-const COOKIE_NAME_USER_ID = "username"
-
-
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
-function deleteCookies() {
-    var Cookies = document.cookie.split(';');
-    for (var i = 0; i < Cookies.length; i++) {
-        document.cookie = Cookies[i] + "=;expires=" + new Date(0).toUTCString();
-    }
-}
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -43,7 +27,7 @@ function hidePlan() {
 }
 
 function toggleHoverSideMenu() {
-    current_width = parseInt(sideMenu.style.width, 10)
+    let current_width = parseInt(sideMenu.style.width, 10)
     if (current_width < 300 || isNaN(current_width)) {
         sideMenu.style.width = "300px"
     } else {
@@ -52,26 +36,17 @@ function toggleHoverSideMenu() {
 }
 
 function hideSideMenu() {
-    current_width = parseInt(sideMenu.style.width, 10)
     if (sideMenu.style.width == "300px") {
         sideMenu.style.width = "60px"
     }
 }
 
-async function errorInfo(response) {
-    error = await response.json()
-    if (typeof error["detail"] == "object") {
-        return "Something went wrong!"
-    } else {
-        return error["detail"]
-    }
-}
 
 async function sendLampActionData() {
     let data = {
-        lamp_number: getCookie(COOKIE_NAME_LAMP_NUMBER),
-        temperature: getCookie(COOKIE_NAME_COLOR_TEMP),
-        brightness: getCookie(COOKIE_NAME_COLOR_BRIGHT)
+        lamp_number: utils.getCookie(utils.COOKIE_NAME_LAMP_NUMBER),
+        temperature: utils.getCookie(utils.COOKIE_NAME_COLOR_TEMP),
+        brightness: utils.getCookie(utils.COOKIE_NAME_COLOR_BRIGHT)
     }
 
     let fetchOptions = {
@@ -83,11 +58,11 @@ async function sendLampActionData() {
         body: JSON.stringify(data),
     };
 
-    response = await fetch("light/lamp-data", fetchOptions);
+    let response = await fetch(utils.LINK_LAMP_DATA, fetchOptions);
 
     if (response.status != 200) {
         responseStatus.className = "sending-response-err"
-        responseStatus.innerHTML = await errorInfo(response)
+        responseStatus.innerHTML = await utils.errorInfo(response)
     } else {
         responseStatus.className = "sending-response-ok"
         responseStatus.innerHTML = "Ok"
@@ -100,9 +75,9 @@ async function sendLampActionData() {
 }
 
 
-slideMenuUsername.after(getCookie(COOKIE_NAME_USER_ID))
+slideMenuUsername.after(utils.getCookie(utils.COOKIE_NAME_USER_ID))
 sendDataBtn.addEventListener("click", sendLampActionData)
-signoutBtn.addEventListener("click", deleteCookies)
+signoutBtn.addEventListener("click", utils.deleteCookies)
 menuBtn.addEventListener("click", toggleHoverSideMenu)
 planBtn.addEventListener("click", showPlan)
 planBtn.addEventListener("click", hideSideMenu)

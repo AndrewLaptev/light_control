@@ -1,3 +1,5 @@
+import * as utils from "./utils.js";
+
 const signinText = document.querySelector(".title-text .login");
 const signinForm = document.querySelector("form.login");
 const signupForm = document.querySelector("form.signup");
@@ -5,23 +7,11 @@ const singinLabelBtn = document.querySelector("label.login");
 const signupLabelBtn = document.querySelector("label.signup");
 const innerForm = document.querySelector(".form-inner");
 const signError = document.querySelector(".sign-error");
+const login_size = `${signinForm.offsetHeight / 2}px`;
+const signup_size = `${signinForm.offsetHeight}px`;
 
-const LOGIN_SIZE = `${signinForm.offsetHeight / 2}px`;
-const SIGNUP_SIZE = `${signinForm.offsetHeight}px`;
-const TOKEN_NAME = "light_control_token"
-const COOKIE_NAME_USER_ID = "username"
+innerForm.style.height = login_size;
 
-innerForm.style.height = LOGIN_SIZE;
-
-
-async function errorInfo(response) {
-    error = await response.json()
-    if (typeof error["detail"] == "object") {
-        return "Something went wrong!"
-    } else {
-        return error["detail"]
-    }
-}
 
 async function signup(event) {
     event.preventDefault();
@@ -37,13 +27,13 @@ async function signup(event) {
         body: JSON.stringify(formDataObj),
     };
 
-    response = await fetch(signupForm.action, fetchOptions);
+    let response = await fetch(signupForm.action, fetchOptions);
 
     if (response.status != 200) {
-        signError.innerText = await errorInfo(response)
+        signError.innerText = await utils.errorInfo(response)
     } else {
-        window.location.replace("/");
-        document.cookie = `${COOKIE_NAME_USER_ID}=${myFormData.get("email")}`;
+        window.location.replace(utils.LINK_ROOT);
+        document.cookie = `${utils.COOKIE_NAME_USER_ID}=${myFormData.get("email")}`;
     }
 };
 
@@ -56,13 +46,13 @@ async function signin(event) {
         body: myFormData,
     };
 
-    response = await fetch(signinForm.action, fetchOptions);
+    let response = await fetch(signinForm.action, fetchOptions);
 
     if (response.status != 200) {
-        signError.innerText = await errorInfo(response)
+        signError.innerText = await utils.errorInfo(response)
     } else {
-        window.location.replace("/");
-        document.cookie = `${COOKIE_NAME_USER_ID}=${myFormData.get("username")}`;
+        window.location.replace(utils.LINK_ROOT);
+        document.cookie = `${utils.COOKIE_NAME_USER_ID}=${myFormData.get("username")}`;
     }
 };
 
@@ -70,14 +60,14 @@ async function signin(event) {
 signupLabelBtn.onclick = (() => {
     signinForm.style.marginLeft = "-50%";
     signinText.style.marginLeft = "-50%";
-    innerForm.style.height = SIGNUP_SIZE;
+    innerForm.style.height = signup_size;
     signError.innerText = "";
 
 });
 singinLabelBtn.onclick = (() => {
     signinForm.style.marginLeft = "0%";
     signinText.style.marginLeft = "0%";
-    innerForm.style.height = LOGIN_SIZE;
+    innerForm.style.height = login_size;
     signError.innerText = "";
 });
 

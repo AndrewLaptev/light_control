@@ -1,3 +1,7 @@
+import * as utils from "./utils.js";
+import { sendDataBtn } from "./index_script.js";
+
+
 class Slider {
     constructor(rangeElement, valueElement, sliderName, sendDataBtn, options) {
         this.rangeElement = rangeElement
@@ -44,22 +48,25 @@ let lightTempValueElement = document.querySelector('.light-temperature__value sp
 let lightBrightElement = document.querySelector('.light-brightness [type="range"]')
 let lightBrightValueElement = document.querySelector('.light-brightness__value span')
 
+let color_temp = utils.getCookie(utils.COOKIE_NAME_COLOR_TEMP)
+let color_bright = utils.getCookie(utils.COOKIE_NAME_COLOR_BRIGHT)
+
 let lightTempOptions = {
     min: 2700,
     max: 6500,
-    cur: (color_temp = getCookie(COOKIE_NAME_COLOR_TEMP)) ? color_temp : 2700,
+    cur: color_temp ? color_temp : 2700,
     measure: 'K'
 }
 
 let lightBrightOptions = {
     min: 0,
     max: 100,
-    cur: (color_temp = getCookie(COOKIE_NAME_COLOR_BRIGHT)) ? color_temp : 0,
+    cur: color_bright ? color_bright : 0,
     measure: '%'
 }
 
-let lightTempSlider = new Slider(lightTempElement, lightTempValueElement, COOKIE_NAME_COLOR_TEMP, sendDataBtn, lightTempOptions)
-let lightBrightSlider = new Slider(lightBrightElement, lightBrightValueElement, COOKIE_NAME_COLOR_BRIGHT, sendDataBtn, lightBrightOptions)
+export var lightTempSlider = new Slider(lightTempElement, lightTempValueElement, utils.COOKIE_NAME_COLOR_TEMP, sendDataBtn, lightTempOptions)
+export var lightBrightSlider = new Slider(lightBrightElement, lightBrightValueElement, utils.COOKIE_NAME_COLOR_BRIGHT, sendDataBtn, lightBrightOptions)
 
 lightTempSlider.init()
 lightBrightSlider.init()

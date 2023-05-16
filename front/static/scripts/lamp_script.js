@@ -1,3 +1,7 @@
+import * as utils from "./utils.js";
+import { responseStatus } from "./index_script.js";
+import { lightTempSlider, lightBrightSlider } from "./slider_script.js";
+
 const inputContainer = document.querySelector(".input-container");
 const input = inputContainer.firstElementChild.nextElementSibling;
 const minus = inputContainer.firstElementChild;
@@ -15,7 +19,7 @@ function changeNumber(e) {
             input.value++;
         }
     }
-    document.cookie = `${COOKIE_NAME_LAMP_NUMBER}=${input.value}`;
+    document.cookie = `${utils.COOKIE_NAME_LAMP_NUMBER}=${input.value}`;
 }
 
 async function getLampData(e) {
@@ -23,7 +27,7 @@ async function getLampData(e) {
         lampNumState = input.value;
 
         if (e.target == minus || e.target == plus) {
-            response = await fetch('light/lamp-data?' + new URLSearchParams
+            let response = await fetch(utils.LINK_LAMP_DATA + '?' + new URLSearchParams
                 (
                     {
                         lamp_number: input.value
@@ -33,7 +37,7 @@ async function getLampData(e) {
 
             if (response.status != 200) {
                 responseStatus.className = "sending-response-err"
-                responseStatus.innerHTML = await errorInfo(response)
+                responseStatus.innerHTML = await utils.errorInfo(response)
 
                 responseStatus.classList.add("show-response")
                 await sleep(2000)
@@ -41,10 +45,10 @@ async function getLampData(e) {
                 await sleep(300)
                 responseStatus.classList.remove("show-response", "hide-response")
             } else {
-                lamp_data = await response.json()
+                let lamp_data = await response.json()
 
-                lightTempSlider.setSlider(lamp_data[COOKIE_NAME_COLOR_TEMP])
-                lightBrightSlider.setSlider(lamp_data[COOKIE_NAME_COLOR_BRIGHT])
+                lightTempSlider.setSlider(lamp_data[utils.COOKIE_NAME_COLOR_TEMP])
+                lightBrightSlider.setSlider(lamp_data[utils.COOKIE_NAME_COLOR_BRIGHT])
             }
 
         }
@@ -52,7 +56,7 @@ async function getLampData(e) {
 }
 
 async function initLampData() {
-    response = await fetch('light/lamp-data?' + new URLSearchParams
+    let response = await fetch(utils.LINK_LAMP_DATA + '?' + new URLSearchParams
         (
             {
                 lamp_number: input.value
@@ -62,10 +66,10 @@ async function initLampData() {
     if (response.status != 200) {
         console.log(response.statusText)
     } else {
-        lamp_data = await response.json()
+        let lamp_data = await response.json()
 
-        lightTempSlider.setSlider(lamp_data[COOKIE_NAME_COLOR_TEMP])
-        lightBrightSlider.setSlider(lamp_data[COOKIE_NAME_COLOR_BRIGHT])
+        lightTempSlider.setSlider(lamp_data[utils.COOKIE_NAME_COLOR_TEMP])
+        lightBrightSlider.setSlider(lamp_data[utils.COOKIE_NAME_COLOR_BRIGHT])
     }
 }
 
@@ -73,9 +77,9 @@ async function initLampData() {
 inputContainer.addEventListener("click", changeNumber);
 inputContainer.addEventListener("click", getLampData);
 
-if (lamp_numb = getCookie(COOKIE_NAME_LAMP_NUMBER)) {
-    input.value = lamp_numb
+if (utils.getCookie(utils.COOKIE_NAME_LAMP_NUMBER)) {
+    input.value = utils.getCookie(utils.COOKIE_NAME_LAMP_NUMBER)
 } else {
     initLampData();
-    document.cookie = `${COOKIE_NAME_LAMP_NUMBER}=${document.querySelector(".lamp-num-container input").value}`;
+    document.cookie = `${utils.COOKIE_NAME_LAMP_NUMBER}=${document.querySelector(".lamp-num-container input").value}`;
 }
