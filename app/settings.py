@@ -6,6 +6,8 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
     log_level: str = "ERROR"
 
+    root_link: str
+
     dbms_name: str
     dbms_path: str
     dbms_fullname: str | None = None

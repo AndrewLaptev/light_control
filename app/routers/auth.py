@@ -4,6 +4,7 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import Response, RedirectResponse
 
+from ..settings import settings
 from ..models import User, Token
 from ..security import create_token
 from ..repositories import UserRepository
@@ -44,7 +45,7 @@ async def signin(
 
 @auth_router.get("/signout", response_class=RedirectResponse)
 async def signout() -> RedirectResponse:
-    response = RedirectResponse("/", status_code=status.HTTP_302_FOUND)
+    response = RedirectResponse(settings.root_link, status_code=status.HTTP_302_FOUND)
     response.delete_cookie(key="light_control_token")
     return response
 

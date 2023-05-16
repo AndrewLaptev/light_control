@@ -3,6 +3,7 @@ from typing import Annotated
 from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from fastapi_mqtt import FastMQTT, MQTTConfig
 
 from .settings import settings
@@ -33,14 +34,18 @@ app.include_router(auth_router)
 app.include_router(light_router)
 app.mount("/static", StaticFiles(directory="front/static"), name="static")
 
+templates = Jinja2Templates(directory="front")
+
 
 @app.get("/", response_class=HTMLResponse, tags=["root"])
 async def get_page(
     request: Request, users: Annotated[UserRepository, Depends()]
 ):
     if await check_token(request, users):
-        with open("front/index.html", "r") as file:
-            return file.read()
+        return templates.TemplateResponse(
+            "index.html", {"request": request, "root_link": settings.root_link}
+        )
     else:
-        with open("front/login.html", "r") as file:
-            return file.read()
+        return templates.TemplateResponse(
+            "login.html", {"request": request, "root_link": settings.root_link}
+        )
