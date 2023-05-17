@@ -16,7 +16,7 @@ from .libs.sqlite import init_dbms
 
 init_logging()
 
-app = FastAPI(title="Light control")
+app = FastAPI(title="Light control", root_path=settings.root_path)
 mqtt = FastMQTT(MQTTConfig(host=settings.mqtt_host, port=settings.mqtt_port))
 
 
@@ -43,9 +43,9 @@ async def get_page(
 ):
     if await check_token(request, users):
         return templates.TemplateResponse(
-            "index.html", {"request": request, "root_link": settings.root_link}
+            "index.html", {"request": request, "root_path": settings.root_path}
         )
     else:
         return templates.TemplateResponse(
-            "login.html", {"request": request, "root_link": settings.root_link}
+            "login.html", {"request": request, "root_path": settings.root_path}
         )

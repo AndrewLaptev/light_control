@@ -3,8 +3,8 @@ export const COOKIE_NAME_LAMP_NUMBER = "lamp_number"
 export const COOKIE_NAME_COLOR_TEMP = "temperature"
 export const COOKIE_NAME_COLOR_BRIGHT = "brightness"
 
-export const LINK_ROOT = "/light-control/"
-export const LINK_LAMP_DATA = LINK_ROOT + "light/lamp-data"
+export const ROOT_PATH = window.location.pathname
+export const LINK_LAMP_DATA = ROOT_PATH + "light/lamp-data"
 
 
 export function getCookie(name) {

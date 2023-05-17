@@ -4,9 +4,9 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
-    log_level: str = "ERROR"
+    log_level: str = "WARNING"
 
-    root_link: str
+    root_path: str
 
     dbms_name: str
     dbms_path: str

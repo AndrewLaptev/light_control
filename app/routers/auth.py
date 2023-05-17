@@ -45,7 +45,7 @@ async def signin(
 
 @auth_router.get("/signout", response_class=RedirectResponse)
 async def signout() -> RedirectResponse:
-    response = RedirectResponse(settings.root_link, status_code=status.HTTP_302_FOUND)
+    response = RedirectResponse(settings.root_path, status_code=status.HTTP_302_FOUND)
     response.delete_cookie(key="light_control_token")
     return response
 

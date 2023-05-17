@@ -32,7 +32,7 @@ async function signup(event) {
     if (response.status != 200) {
         signError.innerText = await utils.errorInfo(response)
     } else {
-        window.location.replace(utils.LINK_ROOT);
+        window.location.replace(utils.ROOT_PATH);
         document.cookie = `${utils.COOKIE_NAME_USER_ID}=${myFormData.get("email")}`;
     }
 };
@@ -51,7 +51,7 @@ async function signin(event) {
     if (response.status != 200) {
         signError.innerText = await utils.errorInfo(response)
     } else {
-        window.location.replace(utils.LINK_ROOT);
+        window.location.replace(utils.ROOT_PATH);
         document.cookie = `${utils.COOKIE_NAME_USER_ID}=${myFormData.get("username")}`;
     }
 };
