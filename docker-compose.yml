@@ -12,7 +12,7 @@ services:
       DBMS_ADMINER_PASSWORD: $DBMS_ADMINER_PASSWORD
       ADMINER_DESIGN: pepa-linha
     ports:
-      - $COMPOSE_ADMINER_PORT:8080
+      - $ADMINER_PORT:8080
 
   light_control:
     image: light_control
@@ -22,4 +22,4 @@ services:
     volumes:
       - ./$DBMS_PATH:/service/$DBMS_PATH
     ports:
-      - $COMPOSE_LIGHT_CONTROL_PORT:8080
+      - $LIGHT_CONTROL_PORT:8080

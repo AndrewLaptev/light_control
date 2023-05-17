@@ -1,3 +1,4 @@
-#!/bin/bash
+cd $(dirname $0)
+cd ../
 
-kill `cat gunicorn.pid`
+kill $(cat gunicorn.pid)
