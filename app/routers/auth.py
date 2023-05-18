@@ -6,8 +6,8 @@ from fastapi.responses import Response, RedirectResponse
 
 from ..settings import settings
 from ..models import User, Token
-from ..security import create_token
 from ..repositories import UserRepository
+from ..libs.security import create_token
 
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
@@ -38,6 +38,7 @@ async def signin(
     response.set_cookie(
         key="light_control_token",
         value=token_.access_token,
+        path=settings.root_path,
         httponly=True,
     )
     return response
@@ -45,8 +46,10 @@ async def signin(
 
 @auth_router.get("/signout", response_class=RedirectResponse)
 async def signout() -> RedirectResponse:
-    response = RedirectResponse(settings.root_path, status_code=status.HTTP_302_FOUND)
-    response.delete_cookie(key="light_control_token")
+    response = RedirectResponse(
+        settings.root_path, status_code=status.HTTP_302_FOUND
+    )
+    response.delete_cookie(key="light_control_token", path=settings.root_path)
     return response
 
 

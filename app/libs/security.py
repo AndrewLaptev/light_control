@@ -4,9 +4,9 @@ from datetime import timedelta, datetime
 from fastapi import HTTPException, Request, Depends, Cookie
 from jose import jwt, JWTError, ExpiredSignatureError
 
-from .models import Token, TokenPayload
-from .settings import settings
-from .repositories import UserRepository
+from ..models import Token, TokenPayload
+from ..settings import settings
+from ..repositories import UserRepository
 
 
 def create_token(username: str) -> Token:

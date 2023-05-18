@@ -7,11 +7,11 @@ from fastapi.templating import Jinja2Templates
 from fastapi_mqtt import FastMQTT, MQTTConfig
 
 from .settings import settings
-from .security import check_token
 from .repositories import UserRepository
 from .routers import auth_router, light_router
 from .logging import init_logging
 from .libs.sqlite import init_dbms
+from .libs.security import check_token
 
 
 init_logging()
