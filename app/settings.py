@@ -4,7 +4,8 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
-    log_level: str = "WARNING"
+    log_level: str
+    log_file_path: str
 
     root_path: str
 

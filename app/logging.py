@@ -6,7 +6,7 @@ from .settings import settings
 log_formatter = logging.Formatter(
     "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
-file_handler = logging.FileHandler("logs.log")
+file_handler = logging.FileHandler(settings.log_file_path)
 file_handler.setFormatter(log_formatter)
 
 
