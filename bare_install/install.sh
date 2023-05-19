@@ -5,10 +5,13 @@ source .env
 
 sudo apt -y install adminer
 
-sudo mkdir -p /dbms
-sudo touch /dbms/${DBMS_NAME}
-sudo chmod 777 -R /dbms
-ln -sf /dbms/${DBMS_NAME} volumes/dbms/${DBMS_NAME}
+sudo touch ${DBMS_PATH}/${DBMS_NAME}
+sudo chmod 777 -R ${DBMS_PATH}
+sudo mkdir -p ${DBMS_ACCESS_PATH}
+sudo chmod 777 ${DBMS_ACCESS_PATH}
+ln -sf $(realpath ${DBMS_PATH})/${DBMS_NAME} ${DBMS_ACCESS_PATH}/${DBMS_NAME}
+
+sudo gpasswd -a www-data $(id -gn)
 
 sudo cp -r bare_install/etc/adminer/* /etc/adminer/
 sudo cp -r bare_install/etc/apache2/sites-enabled/* /etc/apache2/sites-enabled/
