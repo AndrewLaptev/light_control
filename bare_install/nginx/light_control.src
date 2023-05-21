@@ -1,6 +1,5 @@
-index index.php;
-
 location /adminer {
+        index index.php;
         absolute_redirect off;
         try_files $uri $uri/ /index.php?$query_string;
 }
