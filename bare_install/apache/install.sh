@@ -33,7 +33,7 @@ sudo a2enconf php8.1
 
 sudo service apache2 restart
 
-python3.10 -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 
 pip install .
