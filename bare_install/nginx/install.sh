@@ -18,8 +18,8 @@ sudo cp -r bare_install/adminer /var/www/html/
 sudo sed -i "s~DBMS_ADMINER_PASSWORD~${DBMS_ADMINER_PASSWORD}~" /var/www/html/adminer/index.php
 
 cp bare_install/nginx/light_control.src bare_install/nginx/light_control.nginx.site
-sed -i "s~ROOT_PATH~${ROOT_PATH}~" bare_install/nginx/light_control.nginx.site
 sed -i "s~ROOT_PATH_UNSLASHED_END~${ROOT_PATH///}~" bare_install/nginx/light_control.nginx.site
+sed -i "s~ROOT_PATH~${ROOT_PATH}~" bare_install/nginx/light_control.nginx.site
 sed -i "s~LIGHT_CONTROL_PORT~${LIGHT_CONTROL_PORT}~" bare_install/nginx/light_control.nginx.site
 
 python3.10 -m venv .venv
