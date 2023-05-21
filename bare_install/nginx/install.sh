@@ -3,8 +3,6 @@ cd ../../
 
 source .env
 
-sudo apt -y install php8.1-fpm php8.1-sqlite3
-
 sudo touch ${DBMS_PATH}/${DBMS_NAME}
 sudo chmod 777 -R ${DBMS_PATH}
 sudo mkdir -p ${DBMS_ACCESS_PATH}
@@ -12,7 +10,7 @@ sudo chmod 777 ${DBMS_ACCESS_PATH}
 ln -sf $(realpath ${DBMS_PATH})/${DBMS_NAME} ${DBMS_ACCESS_PATH}/${DBMS_NAME}
 
 sudo gpasswd -a www-data $(id -gn)
-sudo service php8.1-fpm restart
+sudo service php*-fpm restart
 
 sudo cp -r bare_install/adminer /var/www/html/
 sudo sed -i "s~DBMS_ADMINER_PASSWORD~${DBMS_ADMINER_PASSWORD}~" /var/www/html/adminer/index.php

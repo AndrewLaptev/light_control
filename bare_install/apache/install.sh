@@ -3,8 +3,6 @@ cd ../../
 
 source .env
 
-sudo apt -y install libapache2-mod-php8.1
-
 sudo touch ${DBMS_PATH}/${DBMS_NAME}
 sudo chmod 777 -R ${DBMS_PATH}
 sudo mkdir -p ${DBMS_ACCESS_PATH}
@@ -12,7 +10,7 @@ sudo chmod 777 ${DBMS_ACCESS_PATH}
 ln -sf $(realpath ${DBMS_PATH})/${DBMS_NAME} ${DBMS_ACCESS_PATH}/${DBMS_NAME}
 
 sudo gpasswd -a www-data $(id -gn)
-sudo service php8.1-fpm restart
+sudo service php*-fpm restart
 
 sudo cp -r bare_install/adminer /var/www/html/
 sudo cp bare_install/apache/adminer.conf /etc/apache2/conf-available/
@@ -26,10 +24,10 @@ sed -i "s~LIGHT_CONTROL_PORT~${LIGHT_CONTROL_PORT}~" bare_install/apache/000-def
 
 sudo a2enmod proxy_http
 sudo a2enconf adminer
-sudo a2enconf php8.1-fpm
+sudo a2enconf php*-fpm
 sudo a2dismod mpm_event
 sudo a2enmod mpm_prefork
-sudo a2enconf php8.1
+sudo a2enconf php*
 
 sudo service apache2 restart
 

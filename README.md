@@ -7,7 +7,12 @@
 ## Требования
 
 * Ubuntu >=16.04 (Debian)
-* Python >= 3.9.2
+* python-full >= 3.9.2
+
+### При чистой установке
+
+* php-fpm php-sqlite3 >= 7.4
+* libapache2-mod-php >= 7.4 (только для Apache)
 
 ### При установке через Docker
 
