@@ -363,7 +363,7 @@ summary = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
 [metadata]
 lock_version = "4.2"
 groups = ["default"]
-content_hash = "sha256:35cc28638f7ce5e53bd8a2445a664c98b802836a115c6666d00ef906dfc956b8"
+content_hash = "sha256:41e9100b908ae4a5ffe7b0166156c391762c71258700386c59c3a074fb5cae02"
 
 [metadata.files]
 "aiosqlite 0.19.0" = [

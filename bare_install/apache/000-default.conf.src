@@ -5,5 +5,5 @@
     ProxyPassReverse ROOT_PATH http://0.0.0.0:LIGHT_CONTROL_PORT/
 
     RedirectMatch ^/$ ROOT_PATH
-    RedirectMatch /ROOT_PATH_UNSLAHED_END ROOT_PATH
+    RedirectMatch /ROOT_PATH_UNSLASHED_END ROOT_PATH
 </VirtualHost>
