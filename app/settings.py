@@ -1,4 +1,5 @@
 import os
+from typing import Optional
 
 from pydantic import BaseSettings
 
@@ -11,7 +12,7 @@ class Settings(BaseSettings):
 
     dbms_name: str
     dbms_path: str
-    dbms_fullname: str | None = None
+    dbms_fullname: Optional[str] = None
 
     jwt_secret_key: str
     jwt_token_expire_days: int
@@ -20,7 +21,7 @@ class Settings(BaseSettings):
     mqtt_port: str
     mqtt_topic_lamp: str
     mqtt_lamp_ids: str
-    mqtt_lamp_idl: list[str] | None = None
+    mqtt_lamp_idl: Optional[list[str]] = None
 
     class Config:
         env_file = ".env"

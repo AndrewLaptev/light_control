@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Optional
 
 from aiosqlite import Connection, DatabaseError
 from fastapi import HTTPException, Depends
@@ -43,7 +43,7 @@ class UserRepository:
 
         return True
 
-    async def get_user(self, email: str) -> User | None:
+    async def get_user(self, email: str) -> Optional[User]:
         try:
             cursor = await self.db.execute(
                 f"""

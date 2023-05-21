@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -6,7 +8,7 @@ class User(BaseModel):
     email: str
     firstname: str
     lastname: str
-    secondname: str | None = None
+    secondname: Optional[str] = None
     password: str
 
 
@@ -27,5 +29,5 @@ class Token(BaseModel):
 
 
 class TokenPayload(BaseModel):
-    sub: str | None = None
-    exp: datetime | None = None
+    sub: Optional[str] = None
+    exp: Optional[datetime] = None

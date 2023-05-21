@@ -298,6 +298,7 @@ requires_python = ">=3.7"
 summary = "The little ASGI library that shines."
 dependencies = [
     "anyio<5,>=3.4.0",
+    "typing-extensions>=3.10.0; python_version < \"3.10\"",
 ]
 
 [[package]]
@@ -363,7 +364,7 @@ summary = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
 [metadata]
 lock_version = "4.2"
 groups = ["default"]
-content_hash = "sha256:353973599d154869168182e29e3fee4eff1b48b85bd03cf0d63ebbbfb22af4e0"
+content_hash = "sha256:739b4e34ec3ae3972de8b9a94ede9a8357d6a1a9f337e19e4bbfd8a635f7ab5d"
 
 [metadata.files]
 "aiosqlite 0.19.0" = [
