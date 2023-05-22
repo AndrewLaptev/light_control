@@ -6,8 +6,7 @@ location /adminer {
 
 location ROOT_PATH {
         absolute_redirect off;
-        proxy_pass http://0.0.0.0:LIGHT_CONTROL_PORT;
-        rewrite /ROOT_PATH_UNSLASHED_END(.*) $1 break;
+        proxy_pass http://0.0.0.0:LIGHT_CONTROL_PORT/;
 }
 
 location ~* \.php$ {
