@@ -4,9 +4,9 @@ from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi_mqtt import FastMQTT, MQTTConfig
 
 from .settings import settings
+from .services import LampControl
 from .repositories import UserRepository
 from .routers import auth_router, light_router
 from .logging import init_logging
@@ -17,17 +17,13 @@ from .libs.security import check_token
 init_logging()
 
 app = FastAPI(title="Light control", root_path=settings.root_path)
-mqtt = FastMQTT(MQTTConfig(host=settings.mqtt_host, port=settings.mqtt_port))
+lamp_control = LampControl()
+lamp_control.mqtt.init_app(app)
 
 
 @app.on_event("startup")
 async def startup():
     await init_dbms()
-
-
-@app.on_event("startup")
-async def startup_mqtt():
-    mqtt.init_app(app)
 
 
 app.include_router(auth_router)

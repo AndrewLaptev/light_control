@@ -19,9 +19,10 @@ class Settings(BaseSettings):
 
     mqtt_host: str
     mqtt_port: str
-    mqtt_topic_lamp: str
-    mqtt_lamp_ids: str
-    mqtt_lamp_idl: Optional[list[str]] = None
+    mqtt_topic_lamp_pattern: str
+    mqtt_lamp_ids: list[str]
+    mqtt_lamp_temp_measure: str
+    mqtt_lamp_bright_measure: str
 
     class Config:
         env_file = ".env"
@@ -30,4 +31,3 @@ class Settings(BaseSettings):
 
 settings = Settings()
 settings.dbms_fullname = os.path.join(settings.dbms_path, settings.dbms_name)
-settings.mqtt_lamp_idl = settings.mqtt_lamp_ids.split(",")
