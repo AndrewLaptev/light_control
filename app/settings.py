@@ -17,6 +17,9 @@ class Settings(BaseSettings):
     jwt_secret_key: str
     jwt_token_expire_days: int
 
+    lamps_init_temperature: int
+    lamps_init_brightness: int
+
     mqtt_host: str
     mqtt_port: str
     mqtt_topic_lamp_pattern: str

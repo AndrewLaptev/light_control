@@ -18,12 +18,21 @@ init_logging()
 
 app = FastAPI(title="Light control", root_path=settings.root_path)
 lamp_control = LampControl()
-lamp_control.mqtt.init_app(app)
 
 
 @app.on_event("startup")
 async def startup():
     await init_dbms()
+    await lamp_control.mqtt.connection()
+    lamp_control.init_lamps(
+        settings.lamps_init_temperature, settings.lamps_init_brightness
+    )
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    lamp_control.shutdown_lamps()
+    await lamp_control.mqtt.client.disconnect()
 
 
 app.include_router(auth_router)
