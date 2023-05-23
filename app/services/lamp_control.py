@@ -72,10 +72,10 @@ class LampControl:
             round(lamp_data.brightness * 2.55),
         )
 
-    def init_lamps(self, temp: int, bright: int):
+    def init_lamps(self, temperature: int, brightness: int):
         for lamp_id in self.cache_lamp_values:
-            self.cache_lamp_values[lamp_id].temperature = temp
-            self.cache_lamp_values[lamp_id].brightness = bright
+            self.cache_lamp_values[lamp_id].temperature = temperature
+            self.cache_lamp_values[lamp_id].brightness = brightness
             self.set_lamp_data(self.cache_lamp_values[lamp_id])
 
     def shutdown_lamps(self):
