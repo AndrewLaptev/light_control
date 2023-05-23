@@ -69,5 +69,5 @@ class LampControl:
             settings.mqtt_topic_lamp_pattern.format(
                 id=lamp_id, measure=settings.mqtt_lamp_bright_measure
             ),
-            lamp_data.brightness,
+            round(lamp_data.brightness * 2.55),
         )
