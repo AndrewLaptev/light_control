@@ -46,7 +46,7 @@ class LampControl:
             lamp_id = re.search(self.topic_lamp_re_pattern, topic).group(1)
             if settings.mqtt_lamp_bright_measure in topic:
                 self.cache_lamp_values[lamp_id].brightness = int(
-                    round(int(payload.decode()) / 2.55)
+                    round(int(payload.decode()) / 2.54)
                 )
             elif settings.mqtt_lamp_temp_measure in topic:
                 self.cache_lamp_values[lamp_id].temperature = int(
@@ -62,14 +62,14 @@ class LampControl:
         self.mqtt.publish(
             settings.mqtt_topic_lamp_pattern.format(
                 id=lamp_id, measure=settings.mqtt_lamp_temp_measure
-            ),
+            ) + "/on",
             lamp_data.temperature,
         )
         self.mqtt.publish(
             settings.mqtt_topic_lamp_pattern.format(
                 id=lamp_id, measure=settings.mqtt_lamp_bright_measure
-            ),
-            round(lamp_data.brightness * 2.55),
+            ) + "/on",
+            round(lamp_data.brightness * 2.54),
         )
 
     def init_lamps(self, temperature: int, brightness: int):
