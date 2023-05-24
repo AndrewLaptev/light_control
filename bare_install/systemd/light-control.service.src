@@ -1,0 +1,12 @@
+[Unit]
+Description=Multi-user web service for managing office lamps via Wirenboard controllers via MQTT protocol
+After=network.target
+
+[Service]
+User=USER
+WorkingDirectory=WORK_DIR_PATH
+ExecStart=WORK_DIR_PATH/.venv/bin/uvicorn app:app --host 0.0.0.0 --port LIGHT_CONTROL_PORT
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

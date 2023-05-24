@@ -170,3 +170,6 @@ cython_debug/
 # Server sites files
 *.nginx.site
 *.apache.site
+
+# Systemd service files
+*.service

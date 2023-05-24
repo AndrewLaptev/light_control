@@ -1,35 +1,42 @@
+uid=$(id -u $USER)
+super=sudo
+
+if [ $uid = 0 ]; then
+    super=''
+fi
+
 cd $(dirname $0)
 cd ../../
 
 source .env
 
-sudo touch ${DBMS_PATH}/${DBMS_NAME}
-sudo chmod 777 -R ${DBMS_PATH}
-sudo mkdir -p ${DBMS_ACCESS_PATH}
-sudo chmod 777 ${DBMS_ACCESS_PATH}
+exec $super touch ${DBMS_PATH}/${DBMS_NAME}
+exec $super chmod 777 -R ${DBMS_PATH}
+exec $super mkdir -p ${DBMS_ACCESS_PATH}
+exec $super chmod 777 ${DBMS_ACCESS_PATH}
 ln -sf $(realpath ${DBMS_PATH})/${DBMS_NAME} ${DBMS_ACCESS_PATH}/${DBMS_NAME}
 
-sudo gpasswd -a www-data $(id -gn)
-sudo service php*-fpm restart
+exec $super gpasswd -a www-data $(id -gn)
+exec $super service php*-fpm restart
 
-sudo cp -r bare_install/adminer /var/www/html/
-sudo cp bare_install/apache/adminer.conf /etc/apache2/conf-available/
-sudo ln -sf /etc/apache2/conf-available/adminer.conf /etc/apache2/conf-enabled/adminer.conf
+exec $super cp -r bare_install/adminer /var/www/html/
+exec $super cp bare_install/apache/adminer.conf /etc/apache2/conf-available/
+exec $super ln -sf /etc/apache2/conf-available/adminer.conf /etc/apache2/conf-enabled/adminer.conf
 cp bare_install/apache/000-default.conf.src bare_install/apache/000-default.conf.apache.site
 
-sudo sed -i "s~DBMS_ADMINER_PASSWORD~${DBMS_ADMINER_PASSWORD}~" /var/www/html/adminer/index.php
+exec $super sed -i "s~DBMS_ADMINER_PASSWORD~${DBMS_ADMINER_PASSWORD}~" /var/www/html/adminer/index.php
 sed -i "s~ROOT_PATH_UNSLASHED_END~${ROOT_PATH///}~" bare_install/apache/000-default.conf.apache.site
 sed -i "s~ROOT_PATH~${ROOT_PATH}~" bare_install/apache/000-default.conf.apache.site
 sed -i "s~LIGHT_CONTROL_PORT~${LIGHT_CONTROL_PORT}~" bare_install/apache/000-default.conf.apache.site
 
-sudo a2enmod proxy_http
-sudo a2enconf adminer
-sudo a2enconf php*-fpm
-sudo a2dismod mpm_event
-sudo a2enmod mpm_prefork
-sudo a2enconf php*
+exec $super a2enmod proxy_http
+exec $super a2enconf adminer
+exec $super a2enconf php*-fpm
+exec $super a2dismod mpm_event
+exec $super a2enmod mpm_prefork
+exec $super a2enconf php*
 
-sudo service apache2 restart
+exec $super service apache2 restart
 
 python3 -m venv .venv
 source .venv/bin/activate
