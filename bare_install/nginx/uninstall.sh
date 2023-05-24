@@ -10,11 +10,11 @@ cd ../../
 
 source .env
 
-exec $super rm -rf ${DBMS_ACCESS_PATH}
+eval $super rm -rf ${DBMS_ACCESS_PATH}
 rm ${DBMS_PATH}/${DBMS_NAME}
-exec $super rm -rf /var/www/html/adminer
+eval $super rm -rf /var/www/html/adminer
 
-exec $super gpasswd -d www-data $(id -gn)
-exec $super service php8.1-fpm restart
+eval $super gpasswd -d www-data $(id -gn)
+eval $super service php8.1-fpm restart
 
 rm -rf .venv

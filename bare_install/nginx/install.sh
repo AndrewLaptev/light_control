@@ -10,17 +10,17 @@ cd ../../
 
 source .env
 
-exec $super touch ${DBMS_PATH}/${DBMS_NAME}
-exec $super chmod 777 -R ${DBMS_PATH}
-exec $super mkdir -p ${DBMS_ACCESS_PATH}
-exec $super chmod 777 ${DBMS_ACCESS_PATH}
+eval $super touch ${DBMS_PATH}/${DBMS_NAME}
+eval $super chmod 777 -R ${DBMS_PATH}
+eval $super mkdir -p ${DBMS_ACCESS_PATH}
+eval $super chmod 777 ${DBMS_ACCESS_PATH}
 ln -sf $(realpath ${DBMS_PATH})/${DBMS_NAME} ${DBMS_ACCESS_PATH}/${DBMS_NAME}
 
-exec $super gpasswd -a www-data $(id -gn)
-exec $super service php*-fpm restart
+eval $super gpasswd -a www-data $(id -gn)
+eval $super service php*-fpm restart
 
-exec $super cp -r bare_install/adminer /var/www/html/
-exec $super sed -i "s~DBMS_ADMINER_PASSWORD~${DBMS_ADMINER_PASSWORD}~" /var/www/html/adminer/index.php
+eval $super cp -r bare_install/adminer /var/www/html/
+eval $super sed -i "s~DBMS_ADMINER_PASSWORD~${DBMS_ADMINER_PASSWORD}~" /var/www/html/adminer/index.php
 
 cp bare_install/nginx/light_control.src bare_install/nginx/light_control.nginx.site
 sed -i "s~ROOT_PATH_UNSLASHED_END~${ROOT_PATH///}~" bare_install/nginx/light_control.nginx.site
