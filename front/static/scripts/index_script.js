@@ -12,10 +12,6 @@ export const sendDataBtn = document.querySelector(".send-button");
 export const responseStatus = document.querySelector(".sending-response-ok");
 
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function showPlan() {
     mainContainer.hidden = true;
     planContainer.hidden = false;
@@ -68,9 +64,9 @@ async function sendLampActionData() {
         responseStatus.innerHTML = "Ok"
     }
     responseStatus.classList.add("show-response")
-    await sleep(2000)
+    await utils.sleep(2000)
     responseStatus.classList.add("hide-response")
-    await sleep(300)
+    await utils.sleep(300)
     responseStatus.classList.remove("show-response", "hide-response")
 }
 

@@ -7,6 +7,10 @@ export const ROOT_PATH = window.location.pathname
 export const LINK_LAMP_DATA = ROOT_PATH + "light/lamp-data"
 
 
+export function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);

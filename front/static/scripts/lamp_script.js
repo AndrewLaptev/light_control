@@ -40,9 +40,9 @@ async function getLampData(e) {
                 responseStatus.innerHTML = await utils.errorInfo(response)
 
                 responseStatus.classList.add("show-response")
-                await sleep(2000)
+                await utils.sleep(2000)
                 responseStatus.classList.add("hide-response")
-                await sleep(300)
+                await utils.sleep(300)
                 responseStatus.classList.remove("show-response", "hide-response")
             } else {
                 let lamp_data = await response.json()
@@ -60,6 +60,8 @@ function changeNumberKeys(e) {
         document.getElementById("plus").click()
     } else if (e.key == "ArrowLeft") {
         document.getElementById("minus").click()
+    } else if (e.key == "Enter") {
+        document.querySelector(".send-button").click()
     }
 }
 
