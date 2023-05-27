@@ -55,6 +55,14 @@ async function getLampData(e) {
     }
 }
 
+function changeNumberKeys(e) {
+    if (e.key == "ArrowRight") {
+        document.getElementById("plus").click()
+    } else if (e.key == "ArrowLeft") {
+        document.getElementById("minus").click()
+    }
+}
+
 async function initLampData() {
     let response = await fetch(utils.LINK_LAMP_DATA + '?' + new URLSearchParams
         (
@@ -76,6 +84,7 @@ async function initLampData() {
 
 inputContainer.addEventListener("click", changeNumber);
 inputContainer.addEventListener("click", getLampData);
+document.addEventListener("keydown", changeNumberKeys);
 
 if (utils.getCookie(utils.COOKIE_NAME_LAMP_NUMBER)) {
     input.value = utils.getCookie(utils.COOKIE_NAME_LAMP_NUMBER)
