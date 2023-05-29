@@ -2,6 +2,7 @@ from typing import Annotated
 from datetime import timedelta, datetime
 
 from fastapi import HTTPException, Request, Depends, Cookie
+from fastapi.security import OAuth2PasswordRequestForm
 from jose import jwt, JWTError, ExpiredSignatureError
 
 from ..models import Token, TokenPayload
@@ -9,18 +10,31 @@ from ..settings import settings
 from ..repositories import UserRepository
 
 
-def create_token(username: str) -> Token:
-    token_payload = TokenPayload(
-        sub=username,
-        exp=datetime.utcnow() + timedelta(days=settings.jwt_token_expire_days),
-    )
-    return Token(
-        access_token=jwt.encode(token_payload.dict(), settings.jwt_secret_key)
-    )
-
-
 def payload_token(token: str) -> TokenPayload:
     return TokenPayload.parse_obj(jwt.decode(token, settings.jwt_secret_key))
+
+
+async def create_token(
+    form_data: OAuth2PasswordRequestForm, users: UserRepository
+) -> Token:
+    if user := await users.get_user(form_data.username):
+        if user.password == form_data.password:
+            token_payload = TokenPayload(
+                sub=user.email,
+                exp=datetime.utcnow()
+                + timedelta(days=settings.jwt_token_expire_days),
+            )
+            return Token(
+                access_token=jwt.encode(
+                    token_payload.dict(), settings.jwt_secret_key
+                )
+            )
+        else:
+            raise HTTPException(status_code=400, detail="Incorrect password!")
+    else:
+        raise HTTPException(
+            status_code=400, detail="Current user does not exist!"
+        )
 
 
 async def verify_token(
@@ -33,7 +47,7 @@ async def verify_token(
 
     try:
         token_payload = payload_token(light_control_token)
-        
+
         if await users.get_user(token_payload.sub) is None:
             raise JWTError
 
