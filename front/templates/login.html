@@ -8,6 +8,8 @@
     <base href="{{ root_path }}">
     <link rel="icon" type="image/x-icon" href="static/images/favicon.png">
     <link rel="stylesheet" href="static/styles/login_style.css">
+    <script type="module" src="static/scripts/login_script.js"></script>
+    <script type="module" src="static/scripts/utils.js"></script>
 </head>
 
 <body>
@@ -26,7 +28,7 @@
             </div>
             <div class="sign-error"></div>
             <div class="form-inner">
-                <form action="auth/signin" class="login" , method="post">
+                <form action="api/auth/signin" class="login" , method="post">
                     <div class="field">
                         <input name="username" type="email" placeholder="Почта" required>
                     </div>
@@ -38,7 +40,7 @@
                         <input type="submit" value="Войти">
                     </div>
                 </form>
-                <form action="auth/signup" class="signup" , method="post">
+                <form action="api/auth/signup" class="signup" , method="post">
                     <div class="field">
                         <input name="email" type="email" placeholder="Почта" required>
                     </div>
@@ -62,8 +64,6 @@
             </div>
         </div>
     </div>
-    <script type="module" src="static/scripts/login_script.js"></script>
-    <script type="module" src="static/scripts/utils.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Light control</title>
+    <base href="{{ root_path }}">
+    <link rel="icon" type="image/x-icon" href="static/images/favicon.png">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/styles/index_style.css">
+    <link rel="stylesheet" href="static/styles/lamp_picker_style.css">
+    <link rel="stylesheet" href="static/styles/slider_style.css">
+
+    <script type="module" src="static/scripts/index_script.js"></script>
+    <script type="module" src="static/scripts/lamp_script.js"></script>
+    <script type="module" src="static/scripts/slider_script.js"></script>
+    <script type="module" src="static/scripts/utils.js"></script>
+
+</head>
+
+<body>
+    <ul class="side-menu">
+        <li><a href="#" class="menu-btn"><span class="fa fa-bars"></span>Меню</a></li>
+        <li><a href="main" class="user-btn"><span class="fa fa-user"></span></a></li>
+        <li><a href="plan" class="plan-btn"><span class="fa fa-file-image-o"></span>План помещений</a></li>
+        <li class="signout-li"><a href="api/auth/signout" class="signout-btn"><span class="fa fa-sign-out"></span>Выход</a>
+        </li>
+    </ul>
+
+    {{ page|safe }}
+
+</body>
+
+</html>
