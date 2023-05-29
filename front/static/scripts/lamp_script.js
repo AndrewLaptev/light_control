@@ -27,7 +27,7 @@ async function getLampData(e) {
         lampNumState = input.value;
 
         if (e.target == minus || e.target == plus) {
-            let response = await fetch(utils.LINK_LAMP_DATA + '?' + new URLSearchParams
+            let response = await fetch(utils.API_LIGHT_PATH + 'lamp-data' + '?' + new URLSearchParams
                 (
                     {
                         lamp_number: input.value
@@ -66,7 +66,7 @@ function changeNumberKeys(e) {
 }
 
 async function initLampData() {
-    let response = await fetch(utils.LINK_LAMP_DATA + '?' + new URLSearchParams
+    let response = await fetch(utils.API_LIGHT_PATH + 'lamp-data' + '?' + new URLSearchParams
         (
             {
                 lamp_number: input.value

@@ -54,7 +54,7 @@ async function sendLampActionData() {
         body: JSON.stringify(data),
     };
 
-    let response = await fetch(utils.LINK_LAMP_DATA, fetchOptions);
+    let response = await fetch(utils.API_LIGHT_PATH + 'lamp-data', fetchOptions);
 
     if (response.status != 200) {
         responseStatus.className = "sending-response-err"

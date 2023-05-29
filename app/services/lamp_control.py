@@ -62,13 +62,13 @@ class LampControl:
         self.mqtt.publish(
             settings.mqtt_topic_lamp_pattern.format(
                 id=lamp_id, measure=settings.mqtt_lamp_temp_measure
-            ) + "/on",
+            ),# + "/on",
             lamp_data.temperature,
         )
         self.mqtt.publish(
             settings.mqtt_topic_lamp_pattern.format(
                 id=lamp_id, measure=settings.mqtt_lamp_bright_measure
-            ) + "/on",
+            ),# + "/on",
             round(lamp_data.brightness * 2.54),
         )
 

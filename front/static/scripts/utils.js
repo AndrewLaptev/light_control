@@ -3,8 +3,9 @@ export const COOKIE_NAME_LAMP_NUMBER = "lamp_number"
 export const COOKIE_NAME_COLOR_TEMP = "temperature"
 export const COOKIE_NAME_COLOR_BRIGHT = "brightness"
 
-export const ROOT_PATH = window.location.pathname
-export const LINK_LAMP_DATA = ROOT_PATH + "light/lamp-data"
+export const ROOT_PATH = document.querySelector("head base").href;
+export const API_LIGHT_PATH = ROOT_PATH + "api/light/";
+export const API_AUTH_PATH = ROOT_PATH + "api/auth/";
 
 
 export function sleep(ms) {

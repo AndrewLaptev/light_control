@@ -29,10 +29,10 @@ async function signup(event) {
 
     let response = await fetch(signupForm.action, fetchOptions);
 
-    if (response.status != 200) {
+    if (!response.redirected) {
         signError.innerText = await utils.errorInfo(response)
     } else {
-        window.location.replace(utils.ROOT_PATH);
+        window.location.replace(response.url);
         document.cookie = `${utils.COOKIE_NAME_USER_ID}=${myFormData.get("email")}`;
     }
 };
@@ -48,10 +48,10 @@ async function signin(event) {
 
     let response = await fetch(signinForm.action, fetchOptions);
 
-    if (response.status != 200) {
+    if (!response.redirected) {
         signError.innerText = await utils.errorInfo(response)
     } else {
-        window.location.replace(utils.ROOT_PATH);
+        window.location.replace(response.url);
         document.cookie = `${utils.COOKIE_NAME_USER_ID}=${myFormData.get("username")}`;
     }
 };
