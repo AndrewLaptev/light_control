@@ -1,5 +1,4 @@
 import os
-from typing import Optional
 
 from pydantic import BaseSettings
 
@@ -12,7 +11,6 @@ class Settings(BaseSettings):
 
     dbms_name: str
     dbms_path: str
-    dbms_fullname: Optional[str] = None
 
     jwt_secret_key: str
     jwt_token_expire_days: int
@@ -27,10 +25,16 @@ class Settings(BaseSettings):
     mqtt_lamp_temp_measure: str
     mqtt_lamp_bright_measure: str
 
+    @property
+    def dbms_fullname(self) -> str:
+        return os.path.join(settings.dbms_path, settings.dbms_name)
+
+    def full_location(self, location: str) -> str:
+        return os.path.join(settings.root_path, location)
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
 
 
 settings = Settings()
-settings.dbms_fullname = os.path.join(settings.dbms_path, settings.dbms_name)

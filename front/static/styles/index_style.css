@@ -115,9 +115,13 @@ html {
     bottom: 0;
 }
 
-.side-menu li a:hover,
+.side-menu li a:hover {
+    background: #014f9c;
+    display: block;
+}
+
 .side-menu li:first-child a {
-    background: #01478d;
+    pointer-events: none;
     display: block;
 }
 
@@ -133,6 +137,11 @@ html {
 
     .side-menu:hover {
         width: 60px;
+    }
+
+    .side-menu li:first-child a {
+        background: none;
+        pointer-events: auto;
     }
 
     .plan-container img {

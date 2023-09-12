@@ -1,17 +1,12 @@
-from typing import Annotated
-
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
 
 from .settings import settings
 from .services import LampControl
-from .repositories import UserRepository
-from .routers import auth_router, light_router
+from .routers import front_router
+from .routers.api import auth_router, light_router
 from .logging import init_logging
 from .libs.sqlite import init_dbms
-from .libs.security import check_token
 
 
 init_logging()
@@ -37,20 +32,5 @@ async def shutdown():
 
 app.include_router(auth_router)
 app.include_router(light_router)
+app.include_router(front_router)
 app.mount("/static", StaticFiles(directory="front/static"), name="static")
-
-templates = Jinja2Templates(directory="front")
-
-
-@app.get("/", response_class=HTMLResponse, tags=["root"])
-async def get_page(
-    request: Request, users: Annotated[UserRepository, Depends()]
-):
-    if await check_token(request, users):
-        return templates.TemplateResponse(
-            "index.html", {"request": request, "root_path": settings.root_path}
-        )
-    else:
-        return templates.TemplateResponse(
-            "login.html", {"request": request, "root_path": settings.root_path}
-        )

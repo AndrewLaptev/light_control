@@ -3,14 +3,14 @@ from datetime import datetime
 
 from fastapi import APIRouter, Cookie, Depends
 
-from ..models import LampData, Action
-from ..services import LampControl
-from ..repositories import ActionRepository
-from ..libs.security import verify_token, payload_token
+from ...models import LampData, Action
+from ...services import LampControl
+from ...repositories import ActionRepository
+from ...libs.security import verify_token, payload_token
 
 
 light_router = APIRouter(
-    prefix="/light", tags=["light"], dependencies=[Depends(verify_token)]
+    prefix="/api/light", tags=["light"], dependencies=[Depends(verify_token)]
 )
 lamp_control = LampControl()
 
